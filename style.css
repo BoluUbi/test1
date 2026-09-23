@@ -1,0 +1,3619 @@
+/* =========================================================
+   BOLU UBI 🐣
+   Personal Birthday / Confession Website
+   ---------------------------------------------------------
+   STYLE.CSS
+   Version: Responsive / Emotional Architecture
+   ========================================================= */
+
+
+/* =========================================================
+   01. DESIGN TOKENS
+   ========================================================= */
+
+:root {
+    /* ---------- Core palette ---------- */
+
+    --cream-0: #fffdf8;
+    --cream-1: #fbf7ef;
+    --cream-2: #f5eee2;
+    --cream-3: #ede1d0;
+
+    --paper: rgba(255, 253, 248, 0.82);
+    --paper-solid: #fffdf9;
+
+    --ink: #302b28;
+    --ink-soft: #625a54;
+    --ink-muted: #91877e;
+
+    --brown: #8c6b59;
+    --brown-deep: #5e463a;
+
+    --rose: #c88988;
+    --rose-soft: #e7c1bd;
+    --rose-pale: #f4dfdb;
+
+    --sage: #9aaa8b;
+    --sage-soft: #dce4d5;
+
+    --gold: #c9a66b;
+    --gold-soft: #ead9b8;
+
+    --white: #ffffff;
+
+    /* ---------- Functional colors ---------- */
+
+    --shadow-color: rgba(62, 47, 38, 0.12);
+    --shadow-soft: 0 18px 60px rgba(70, 51, 40, 0.08);
+    --shadow-medium: 0 24px 80px rgba(70, 51, 40, 0.13);
+
+    --border-soft: rgba(108, 83, 69, 0.12);
+    --border-medium: rgba(108, 83, 69, 0.2);
+
+    /* ---------- Typography ---------- */
+
+    --font-display:
+        "Cormorant Garamond",
+        "Iowan Old Style",
+        "Baskerville",
+        "Times New Roman",
+        serif;
+
+    --font-body:
+        "DM Sans",
+        "Avenir Next",
+        "Segoe UI",
+        system-ui,
+        sans-serif;
+
+    --font-hand:
+        "Caveat",
+        "Segoe Print",
+        "Comic Sans MS",
+        cursive;
+
+    --fs-xs: clamp(0.68rem, 0.65rem + 0.1vw, 0.76rem);
+    --fs-sm: clamp(0.78rem, 0.72rem + 0.18vw, 0.9rem);
+    --fs-md: clamp(0.95rem, 0.88rem + 0.22vw, 1.08rem);
+    --fs-lg: clamp(1.2rem, 1.04rem + 0.55vw, 1.55rem);
+    --fs-xl: clamp(1.75rem, 1.35rem + 1.25vw, 2.65rem);
+    --fs-hero: clamp(2.75rem, 1.8rem + 4vw, 6.2rem);
+
+    --lh-tight: 0.98;
+    --lh-heading: 1.08;
+    --lh-body: 1.72;
+    --lh-relaxed: 1.9;
+
+    /* ---------- Layout ---------- */
+
+    --page-pad: clamp(1rem, 3vw, 3.5rem);
+
+    --content-xs: 30rem;
+    --content-sm: 42rem;
+    --content-md: 58rem;
+    --content-lg: 78rem;
+
+    --radius-xs: 0.6rem;
+    --radius-sm: 1rem;
+    --radius-md: 1.5rem;
+    --radius-lg: 2.2rem;
+    --radius-xl: 3rem;
+    --radius-pill: 999px;
+
+    /* ---------- Motion ---------- */
+
+    --ease-soft:
+        cubic-bezier(0.22, 0.61, 0.36, 1);
+
+    --ease-spring:
+        cubic-bezier(0.2, 0.85, 0.25, 1.25);
+
+    --ease-slow:
+        cubic-bezier(0.16, 1, 0.3, 1);
+
+    --duration-fast: 180ms;
+    --duration-normal: 420ms;
+    --duration-slow: 850ms;
+    --duration-scene: 1000ms;
+
+    /* ---------- Safe viewport ---------- */
+
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-right: env(safe-area-inset-right, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-left: env(safe-area-inset-left, 0px);
+}
+
+
+/* =========================================================
+   02. RESET / BASE
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+
+    background: var(--cream-1);
+
+    font-size: 16px;
+
+    scroll-behavior: auto;
+
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+body {
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+
+    background:
+        radial-gradient(
+            circle at 15% 10%,
+            rgba(231, 193, 189, 0.15),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 88% 80%,
+            rgba(220, 228, 213, 0.2),
+            transparent 32%
+        ),
+        var(--cream-1);
+
+    color: var(--ink);
+
+    font-family: var(--font-body);
+    font-size: var(--fs-md);
+    line-height: var(--lh-body);
+
+    overflow: hidden;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    touch-action: manipulation;
+}
+
+body.is-locked {
+    overflow: hidden;
+}
+
+button,
+a,
+input,
+textarea {
+    font: inherit;
+}
+
+button {
+    border: 0;
+    margin: 0;
+}
+
+img,
+svg,
+video {
+    display: block;
+    max-width: 100%;
+}
+
+img {
+    height: auto;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+::selection {
+    background: var(--rose-soft);
+    color: var(--brown-deep);
+}
+
+
+/* =========================================================
+   03. APP SHELL
+   ========================================================= */
+
+#app,
+.app,
+.website,
+.page {
+    position: relative;
+
+    width: 100%;
+    min-height: 100dvh;
+
+    isolation: isolate;
+}
+
+.app-shell {
+    position: relative;
+
+    width: 100%;
+    min-height: 100dvh;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   04. GLOBAL ATMOSPHERE
+   ========================================================= */
+
+.ambient {
+    position: fixed;
+    inset: 0;
+
+    z-index: -3;
+
+    pointer-events: none;
+
+    overflow: hidden;
+}
+
+.ambient::before,
+.ambient::after {
+    content: "";
+
+    position: absolute;
+
+    width: min(38rem, 65vw);
+    aspect-ratio: 1;
+
+    border-radius: 50%;
+
+    filter: blur(70px);
+
+    opacity: 0.32;
+}
+
+.ambient::before {
+    top: -18%;
+    left: -12%;
+
+    background: rgba(231, 193, 189, 0.25);
+}
+
+.ambient::after {
+    right: -15%;
+    bottom: -20%;
+
+    background: rgba(220, 228, 213, 0.3);
+}
+
+
+/* Subtle paper grain */
+
+.grain,
+.noise {
+    position: fixed;
+    inset: 0;
+
+    z-index: 999;
+
+    pointer-events: none;
+
+    opacity: 0.035;
+
+    background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+
+    mix-blend-mode: multiply;
+}
+
+
+/* =========================================================
+   05. SCENE SYSTEM
+   ========================================================= */
+
+/*
+   IMPORTANT:
+
+   Scene navigation is controlled by JS.
+   CSS does NOT depend on scroll position.
+
+   Expected state:
+   .scene
+   .scene.is-active
+
+   We also support:
+   .scene.active
+   [data-active="true"]
+*/
+
+.scene {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100dvh;
+    min-height: 100svh;
+
+    overflow: hidden;
+
+    display: grid;
+    place-items: center;
+
+    padding:
+        calc(var(--page-pad) + var(--safe-top))
+        calc(var(--page-pad) + var(--safe-right))
+        calc(var(--page-pad) + var(--safe-bottom))
+        calc(var(--page-pad) + var(--safe-left));
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transform:
+        translate3d(0, 18px, 0)
+        scale(0.985);
+
+    transition:
+        opacity var(--duration-scene) var(--ease-soft),
+        transform var(--duration-scene) var(--ease-soft),
+        visibility 0s linear var(--duration-scene);
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    scrollbar-width: thin;
+    scrollbar-color:
+        rgba(108, 83, 69, 0.18)
+        transparent;
+
+    overscroll-behavior: contain;
+}
+
+.scene.is-active,
+.scene.active,
+.scene[data-active="true"] {
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: auto;
+
+    transform:
+        translate3d(0, 0, 0)
+        scale(1);
+
+    transition:
+        opacity var(--duration-scene) var(--ease-soft),
+        transform var(--duration-scene) var(--ease-soft),
+        visibility 0s linear 0s;
+
+    z-index: 10;
+}
+
+
+/*
+   JS can optionally use these direction classes.
+*/
+
+.scene.is-entering-forward {
+    transform:
+        translate3d(5vw, 0, 0)
+        scale(0.985);
+}
+
+.scene.is-entering-backward {
+    transform:
+        translate3d(-5vw, 0, 0)
+        scale(0.985);
+}
+
+.scene.is-leaving {
+    opacity: 0;
+    pointer-events: none;
+}
+
+
+/* Scene inner wrapper */
+
+.scene__inner,
+.scene-inner,
+.scene-content {
+    position: relative;
+
+    width: min(100%, var(--content-lg));
+
+    min-height: min(100%, 48rem);
+
+    margin: auto;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: clamp(1.25rem, 3vw, 2.5rem);
+
+    padding-block:
+        clamp(1rem, 3vh, 3rem);
+}
+
+
+/*
+   Long scenes are allowed to breathe vertically.
+*/
+
+.scene--long .scene__inner,
+.scene--letter .scene__inner,
+.scene--timeline .scene__inner {
+    justify-content: flex-start;
+
+    min-height: max-content;
+
+    padding-block:
+        clamp(1rem, 4vh, 4rem)
+        clamp(4.5rem, 8vh, 7rem);
+}
+
+
+/* =========================================================
+   06. SCENE BACKGROUND VARIATIONS
+   ========================================================= */
+
+.scene::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    z-index: -2;
+
+    pointer-events: none;
+}
+
+.scene--intro {
+    background:
+        radial-gradient(
+            circle at 50% 42%,
+            rgba(255, 255, 255, 0.78),
+            transparent 40%
+        ),
+        linear-gradient(
+            145deg,
+            var(--cream-0),
+            var(--cream-2)
+        );
+}
+
+.scene--birthday {
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(231, 193, 189, 0.24),
+            transparent 30%
+        ),
+        linear-gradient(
+            160deg,
+            #fffaf5,
+            #f6eee4
+        );
+}
+
+.scene--timeline {
+    background:
+        radial-gradient(
+            circle at 80% 15%,
+            rgba(220, 228, 213, 0.3),
+            transparent 32%
+        ),
+        var(--cream-1);
+}
+
+.scene--traits {
+    background:
+        linear-gradient(
+            135deg,
+            #fcf8f1,
+            #f5ece3
+        );
+}
+
+.scene--memories {
+    background:
+        radial-gradient(
+            circle at 85% 80%,
+            rgba(220, 228, 213, 0.26),
+            transparent 35%
+        ),
+        var(--cream-1);
+}
+
+.scene--photo {
+    background:
+        radial-gradient(
+            circle at 50% 40%,
+            rgba(255, 255, 255, 0.8),
+            transparent 40%
+        ),
+        #f8f2e9;
+}
+
+.scene--transition {
+    background:
+        radial-gradient(
+            circle at 50% 45%,
+            rgba(201, 166, 107, 0.1),
+            transparent 30%
+        ),
+        #f7f0e7;
+}
+
+.scene--letter {
+    background:
+        linear-gradient(
+            145deg,
+            #fbf6ef,
+            #f1e8dc
+        );
+}
+
+.scene--quiet {
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(255, 255, 255, 0.6),
+            transparent 45%
+        ),
+        #f5eee4;
+}
+
+.scene--final {
+    color: #f9f4eb;
+
+    background:
+        radial-gradient(
+            circle at 50% 35%,
+            rgba(255, 255, 255, 0.08),
+            transparent 35%
+        ),
+        linear-gradient(
+            145deg,
+            #382c28,
+            #211b19 70%,
+            #171312
+        );
+}
+
+.scene--epilogue {
+    background:
+        radial-gradient(
+            circle at 50% 40%,
+            rgba(231, 193, 189, 0.08),
+            transparent 32%
+        ),
+        #211b19;
+}
+
+
+/* =========================================================
+   07. TYPOGRAPHY
+   ========================================================= */
+
+.eyebrow,
+.scene__eyebrow,
+.kicker {
+    margin: 0;
+
+    color: var(--ink-muted);
+
+    font-family: var(--font-body);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+
+    line-height: 1.4;
+}
+
+.hero-title,
+.scene__title,
+.display-title {
+    max-width: 12ch;
+
+    margin: 0;
+
+    color: var(--ink);
+
+    font-family: var(--font-display);
+
+    font-size: var(--fs-hero);
+    font-weight: 500;
+
+    line-height: var(--lh-tight);
+
+    letter-spacing: -0.035em;
+
+    text-wrap: balance;
+}
+
+.scene--final .hero-title,
+.scene--final .scene__title,
+.scene--epilogue .hero-title,
+.scene--epilogue .scene__title {
+    color: var(--cream-0);
+}
+
+.section-title {
+    margin: 0;
+
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    font-weight: 500;
+
+    line-height: var(--lh-heading);
+
+    letter-spacing: -0.025em;
+
+    text-wrap: balance;
+}
+
+.body-copy,
+.scene__copy {
+    max-width: 44rem;
+
+    margin: 0;
+
+    color: var(--ink-soft);
+
+    font-size: var(--fs-md);
+
+    line-height: var(--lh-body);
+
+    text-wrap: pretty;
+}
+
+.scene--final .body-copy,
+.scene--final .scene__copy,
+.scene--epilogue .body-copy {
+    color: rgba(255, 253, 248, 0.76);
+}
+
+
+/* Handwritten personality */
+
+.handwritten,
+.hand,
+.signature {
+    font-family: var(--font-hand);
+
+    font-weight: 500;
+
+    letter-spacing: 0.015em;
+}
+
+.signature {
+    font-size: clamp(1.25rem, 1rem + 0.8vw, 1.9rem);
+}
+
+
+/* =========================================================
+   08. SCENE 01 — INTRO
+   ========================================================= */
+
+.intro {
+    text-align: center;
+}
+
+.intro__hello,
+.intro-title {
+    max-width: 10ch;
+
+    margin-inline: auto;
+
+    font-size:
+        clamp(
+            3rem,
+            1.9rem + 5vw,
+            7rem
+        );
+}
+
+.intro__subtitle,
+.intro-subtitle {
+    max-width: 30rem;
+
+    color: var(--ink-muted);
+
+    font-family: var(--font-display);
+
+    font-size:
+        clamp(
+            1.1rem,
+            0.95rem + 0.55vw,
+            1.65rem
+        );
+
+    font-style: italic;
+}
+
+.intro__signature {
+    margin-top: -0.25rem;
+
+    font-family: var(--font-hand);
+
+    font-size: clamp(1rem, 0.9rem + 0.35vw, 1.3rem);
+
+    color: var(--brown);
+}
+
+
+/* Intro decorative line */
+
+.intro__line {
+    width: min(9rem, 35vw);
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(140, 107, 89, 0.45),
+            transparent
+        );
+}
+
+
+/* =========================================================
+   09. PERSONAL MESSAGE / BIRTHDAY
+   ========================================================= */
+
+.message {
+    width: min(100%, 48rem);
+
+    padding:
+        clamp(1.25rem, 3vw, 2.4rem);
+
+    border:
+        1px solid var(--border-soft);
+
+    border-radius: var(--radius-lg);
+
+    background:
+        rgba(255, 253, 248, 0.62);
+
+    box-shadow: var(--shadow-soft);
+
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+.message__text {
+    margin: 0;
+
+    color: var(--ink-soft);
+
+    font-size: var(--fs-md);
+
+    line-height: 1.85;
+}
+
+.message__text + .message__text {
+    margin-top: 1.15rem;
+}
+
+
+/* =========================================================
+   10. SCENE 02 — MATH REVEAL
+   ========================================================= */
+
+.birthday-copy {
+    width: min(100%, 44rem);
+
+    text-align: center;
+}
+
+.birthday-copy__opening {
+    max-width: 34rem;
+
+    margin-inline: auto;
+
+    font-family: var(--font-display);
+
+    font-size:
+        clamp(
+            1.5rem,
+            1.1rem + 1.15vw,
+            2.45rem
+        );
+
+    line-height: 1.18;
+}
+
+.birthday-copy__joke {
+    max-width: 34rem;
+
+    margin-inline: auto;
+
+    color: var(--ink-soft);
+
+    font-size: var(--fs-md);
+}
+
+.math-reveal {
+    width: min(
+        100%,
+        52rem
+    );
+
+    margin-block:
+        clamp(0.5rem, 2vw, 1.5rem);
+
+    padding:
+        clamp(0.75rem, 2vw, 1.35rem);
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    border:
+        1px solid rgba(140, 107, 89, 0.13);
+
+    border-radius: var(--radius-md);
+
+    background:
+        rgba(255, 255, 255, 0.52);
+
+    box-shadow:
+        0 16px 50px rgba(70, 51, 40, 0.07);
+
+    scrollbar-width: thin;
+}
+
+.math-reveal mjx-container,
+.math-reveal .katex,
+.math-reveal .math {
+    max-width: 100%;
+
+    font-size:
+        clamp(
+            0.7rem,
+            0.52rem + 1.2vw,
+            1.15rem
+        );
+}
+
+.birthday-after {
+    max-width: 34rem;
+
+    margin-inline: auto;
+
+    font-family: var(--font-hand);
+
+    font-size:
+        clamp(
+            1.25rem,
+            1rem + 0.65vw,
+            1.7rem
+        );
+
+    color: var(--brown-deep);
+}
+
+
+/* =========================================================
+   11. STICKERS
+   ========================================================= */
+
+.sticker {
+    position: absolute;
+
+    z-index: 3;
+
+    width: clamp(3rem, 8vw, 6rem);
+
+    height: auto;
+
+    object-fit: contain;
+
+    pointer-events: none;
+
+    user-select: none;
+
+    filter:
+        drop-shadow(
+            0 7px 10px rgba(72, 54, 44, 0.1)
+        );
+
+    transform-origin: center;
+
+    transition:
+        transform 500ms var(--ease-spring),
+        opacity 400ms ease;
+}
+
+.scene.is-active .sticker {
+    animation:
+        stickerFloat
+        5.5s
+        ease-in-out
+        infinite;
+}
+
+.sticker--small {
+    width: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.sticker--medium {
+    width: clamp(3.5rem, 9vw, 6.5rem);
+}
+
+.sticker--large {
+    width: clamp(5rem, 12vw, 8rem);
+}
+
+.sticker--1 {
+    top: 12%;
+    left: 7%;
+
+    transform: rotate(-9deg);
+}
+
+.sticker--2 {
+    right: 8%;
+    bottom: 16%;
+
+    transform: rotate(8deg);
+}
+
+.sticker--3 {
+    right: 5%;
+    top: 18%;
+
+    transform: rotate(6deg);
+}
+
+.sticker--4 {
+    left: 7%;
+    bottom: 18%;
+
+    transform: rotate(-8deg);
+}
+
+.sticker--5 {
+    right: 8%;
+    top: 15%;
+
+    transform: rotate(9deg);
+}
+
+.sticker--6 {
+    left: 18%;
+    top: 8%;
+
+    transform: rotate(-5deg);
+}
+
+
+/*
+   Sticker groups must stay behind text.
+
+   If HTML uses:
+   .sticker-slot
+*/
+
+.sticker-slot {
+    position: absolute;
+
+    z-index: 2;
+
+    pointer-events: none;
+}
+
+.sticker-slot img {
+    width: clamp(3rem, 7vw, 5.5rem);
+    height: auto;
+}
+
+
+/* Prevent accidental overlap on compact screens */
+
+@media (max-width: 600px) {
+    .sticker--1 {
+        top: 7%;
+        left: 4%;
+    }
+
+    .sticker--2 {
+        right: 4%;
+        bottom: 9%;
+    }
+
+    .sticker--3 {
+        right: 3%;
+        top: 8%;
+    }
+
+    .sticker--4 {
+        left: 4%;
+        bottom: 9%;
+    }
+
+    .sticker--5 {
+        right: 5%;
+        top: 7%;
+    }
+
+    .sticker--6 {
+        left: auto;
+        right: 22%;
+        top: 4%;
+    }
+}
+
+
+/* =========================================================
+   12. SCENE 03 — TIMELINE
+   ========================================================= */
+
+.flashback-intro {
+    width: min(100%, 50rem);
+
+    text-align: center;
+}
+
+.flashback-title {
+    margin: 0;
+
+    color: var(--brown-deep);
+
+    font-family: var(--font-display);
+
+    font-size:
+        clamp(
+            2.25rem,
+            1.45rem + 3vw,
+            4.8rem
+        );
+
+    font-weight: 500;
+
+    line-height: 0.98;
+
+    letter-spacing: -0.04em;
+}
+
+.flashback-title .handwritten {
+    color: var(--brown);
+
+    font-size: 1.12em;
+}
+
+.flashback-copy {
+    max-width: 31rem;
+
+    margin-inline: auto;
+
+    color: var(--ink-soft);
+
+    font-size: var(--fs-md);
+}
+
+
+/* Timeline */
+
+.timeline {
+    position: relative;
+
+    width: min(100%, 64rem);
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            4,
+            minmax(0, 1fr)
+        );
+
+    gap: clamp(0.75rem, 2vw, 1.4rem);
+
+    margin-top: clamp(1rem, 3vw, 2rem);
+}
+
+.timeline::before {
+    content: "";
+
+    position: absolute;
+
+    top: 2.3rem;
+    left: 7%;
+
+    width: 86%;
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(140, 107, 89, 0.24),
+            transparent
+        );
+}
+
+.timeline-card {
+    position: relative;
+
+    min-height: 13rem;
+
+    padding:
+        1.2rem;
+
+    border:
+        1px solid var(--border-soft);
+
+    border-radius: var(--radius-md);
+
+    background:
+        rgba(255, 253, 248, 0.7);
+
+    box-shadow:
+        0 14px 42px rgba(70, 51, 40, 0.06);
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    transition:
+        transform 420ms var(--ease-soft),
+        box-shadow 420ms var(--ease-soft),
+        border-color 420ms ease;
+}
+
+.timeline-card:hover {
+    transform: translateY(-5px);
+
+    border-color: var(--border-medium);
+
+    box-shadow:
+        0 22px 54px rgba(70, 51, 40, 0.11);
+}
+
+.timeline-card__index {
+    position: relative;
+
+    width: 2.8rem;
+    height: 2.8rem;
+
+    display: grid;
+    place-items: center;
+
+    margin-bottom: 1.25rem;
+
+    border-radius: 50%;
+
+    background:
+        var(--paper-solid);
+
+    border:
+        1px solid rgba(140, 107, 89, 0.2);
+
+    color: var(--brown);
+
+    font-family: var(--font-display);
+
+    font-size: 1.1rem;
+}
+
+.timeline-card__date {
+    display: block;
+
+    margin-bottom: 0.35rem;
+
+    color: var(--rose);
+
+    font-size: var(--fs-xs);
+
+    font-weight: 700;
+
+    letter-spacing: 0.11em;
+
+    text-transform: uppercase;
+}
+
+.timeline-card__title {
+    margin: 0 0 0.55rem;
+
+    color: var(--ink);
+
+    font-family: var(--font-display);
+
+    font-size: var(--fs-lg);
+
+    line-height: 1.1;
+}
+
+.timeline-card__text {
+    margin: 0;
+
+    color: var(--ink-soft);
+
+    font-size: var(--fs-sm);
+
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   13. SCENE 04 — SUBTLE TRAITS
+   ========================================================= */
+
+.traits {
+    width: min(100%, 62rem);
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0, 1fr)
+        );
+
+    gap: clamp(0.8rem, 2vw, 1.4rem);
+}
+
+.trait-card {
+    position: relative;
+
+    min-height: 9.5rem;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: flex-end;
+
+    padding: clamp(1.1rem, 2.2vw, 1.6rem);
+
+    border:
+        1px solid var(--border-soft);
+
+    border-radius: var(--radius-md);
+
+    background:
+        rgba(255, 253, 248, 0.7);
+
+    box-shadow:
+        0 12px 40px rgba(70, 51, 40, 0.05);
+
+    overflow: hidden;
+
+    transition:
+        transform 420ms var(--ease-soft),
+        background 420ms ease,
+        border-color 420ms ease;
+}
+
+.trait-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: -3rem;
+    right: -3rem;
+
+    width: 7rem;
+    aspect-ratio: 1;
+
+    border-radius: 50%;
+
+    background:
+        rgba(231, 193, 189, 0.14);
+}
+
+.trait-card:hover {
+    transform: translateY(-4px);
+
+    border-color:
+        rgba(140, 107, 89, 0.22);
+
+    background:
+        rgba(255, 253, 248, 0.92);
+}
+
+.trait-card__word {
+    position: relative;
+
+    margin: 0;
+
+    font-family: var(--font-display);
+
+    font-size: var(--fs-lg);
+
+    line-height: 1.05;
+}
+
+.trait-card__hint {
+    position: relative;
+
+    margin:
+        0.55rem
+        0
+        0;
+
+    color: var(--ink-muted);
+
+    font-size: var(--fs-sm);
+
+    line-height: 1.45;
+}
+
+
+/* Expandable trait */
+
+.trait-card.is-expanded {
+    transform: translateY(-3px);
+
+    border-color:
+        rgba(140, 107, 89, 0.25);
+}
+
+
+/* =========================================================
+   14. EXPAND / PLUS BUTTON
+   ========================================================= */
+
+.expand-button,
+.trait-toggle,
+.plus-button {
+    position: absolute;
+
+    top: 0.85rem;
+    right: 0.85rem;
+
+    width: 2.35rem;
+    height: 2.35rem;
+
+    display: grid;
+    place-items: center;
+
+    border:
+        1px solid rgba(140, 107, 89, 0.18);
+
+    border-radius: 50%;
+
+    background:
+        rgba(255, 253, 248, 0.86);
+
+    color: var(--brown-deep);
+
+    cursor: pointer;
+
+    z-index: 4;
+
+    transition:
+        transform 300ms var(--ease-spring),
+        background 250ms ease,
+        box-shadow 250ms ease;
+}
+
+.expand-button:hover,
+.trait-toggle:hover,
+.plus-button:hover {
+    transform: rotate(90deg) scale(1.07);
+
+    background: var(--white);
+
+    box-shadow:
+        0 8px 20px rgba(70, 51, 40, 0.1);
+}
+
+.expand-button:active,
+.trait-toggle:active,
+.plus-button:active {
+    transform: rotate(90deg) scale(0.94);
+}
+
+.expand-button:focus-visible,
+.trait-toggle:focus-visible,
+.plus-button:focus-visible {
+    outline: 2px solid var(--rose);
+
+    outline-offset: 4px;
+}
+
+.trait-card__detail {
+    max-height: 0;
+
+    overflow: hidden;
+
+    opacity: 0;
+
+    transition:
+        max-height 450ms var(--ease-soft),
+        opacity 300ms ease,
+        margin-top 450ms var(--ease-soft);
+}
+
+.trait-card.is-expanded .trait-card__detail,
+.trait-card[data-expanded="true"] .trait-card__detail {
+    max-height: 10rem;
+
+    margin-top: 0.75rem;
+
+    opacity: 1;
+}
+
+
+/* =========================================================
+   15. SCENE 05 — PERSONAL MEMORY CARDS
+   ========================================================= */
+
+.memory-grid {
+    width: min(100%, 64rem);
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0, 1fr)
+        );
+
+    gap: clamp(0.8rem, 2vw, 1.35rem);
+}
+
+.memory-card {
+    position: relative;
+
+    min-height: 10rem;
+
+    padding: 1.35rem;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: space-between;
+
+    border:
+        1px solid var(--border-soft);
+
+    border-radius: var(--radius-md);
+
+    background:
+        rgba(255, 253, 248, 0.72);
+
+    box-shadow:
+        0 12px 42px rgba(70, 51, 40, 0.055);
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    transition:
+        transform 420ms var(--ease-soft),
+        box-shadow 420ms ease,
+        border-color 420ms ease;
+}
+
+.memory-card:hover {
+    transform:
+        translateY(-5px)
+        rotate(-0.35deg);
+
+    border-color:
+        rgba(140, 107, 89, 0.24);
+
+    box-shadow:
+        0 24px 56px rgba(70, 51, 40, 0.11);
+}
+
+.memory-card__icon {
+    width: 2.75rem;
+    height: 2.75rem;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    background:
+        var(--cream-2);
+
+    font-size: 1.25rem;
+}
+
+.memory-card__title {
+    margin: 1.2rem 0 0.25rem;
+
+    font-family: var(--font-display);
+
+    font-size: var(--fs-lg);
+
+    line-height: 1.05;
+}
+
+.memory-card__hint {
+    margin: 0;
+
+    color: var(--ink-muted);
+
+    font-size: var(--fs-sm);
+}
+
+.memory-card__detail {
+    position: absolute;
+    inset: auto 0 0 0;
+
+    padding:
+        1.15rem
+        1.35rem;
+
+    background:
+        rgba(255, 253, 248, 0.96);
+
+    border-top:
+        1px solid var(--border-soft);
+
+    transform:
+        translateY(102%);
+
+    transition:
+        transform 500ms var(--ease-soft);
+}
+
+.memory-card.is-open .memory-card__detail,
+.memory-card[data-open="true"] .memory-card__detail {
+    transform: translateY(0);
+}
+
+
+/* ---------- Hydroponic side quest ---------- */
+
+.memory-card--hydroponic {
+    grid-column: span 2;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(244, 249, 240, 0.86),
+            rgba(255, 253, 248, 0.76)
+        );
+}
+
+.sidequest {
+    position: relative;
+
+    width: min(100%, 60rem);
+
+    padding:
+        clamp(1.3rem, 3vw, 2rem);
+
+    border:
+        1px solid rgba(154, 170, 139, 0.28);
+
+    border-radius: var(--radius-lg);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(220, 228, 213, 0.44),
+            rgba(255, 253, 248, 0.72)
+        );
+
+    box-shadow:
+        0 18px 52px rgba(81, 95, 70, 0.07);
+}
+
+.sidequest__eyebrow {
+    margin: 0 0 0.5rem;
+
+    color: #718065;
+
+    font-size: var(--fs-xs);
+
+    font-weight: 700;
+
+    letter-spacing: 0.15em;
+
+    text-transform: uppercase;
+}
+
+.sidequest__title {
+    margin: 0;
+
+    font-family: var(--font-display);
+
+    font-size: var(--fs-xl);
+
+    line-height: 1;
+}
+
+.sidequest__copy {
+    max-width: 40rem;
+
+    margin: 0.8rem 0 0;
+
+    color: var(--ink-soft);
+
+    font-size: var(--fs-sm);
+
+    line-height: 1.75;
+}
+
+.sidequest__ending {
+    margin:
+        1rem
+        0
+        0;
+
+    color: #68775d;
+
+    font-family: var(--font-hand);
+
+    font-size:
+        clamp(
+            1.25rem,
+            1rem + 0.7vw,
+            1.7rem
+        );
+}
+
+
+/* =========================================================
+   16. SCENE 06 — PHOTO
+   ========================================================= */
+
+.photo-scene {
+    text-align: center;
+}
+
+.photo-frame {
+    position: relative;
+
+    width: min(
+        100%,
+        27rem
+    );
+
+    /*
+       This intentionally uses contain-like architecture.
+       The image itself should NEVER be cropped.
+    */
+
+    aspect-ratio: 4 / 5;
+
+    display: grid;
+    place-items: center;
+
+    padding:
+        clamp(0.65rem, 1.4vw, 1rem);
+
+    border:
+        1px solid rgba(140, 107, 89, 0.15);
+
+    border-radius:
+        2.4rem
+        1.3rem
+        2rem
+        1.6rem;
+
+    background:
+        rgba(255, 253, 248, 0.8);
+
+    box-shadow:
+        0 28px 80px rgba(65, 48, 39, 0.13);
+
+    transform:
+        rotate(-1.4deg);
+
+    overflow: hidden;
+
+    transition:
+        transform 700ms var(--ease-spring),
+        box-shadow 700ms ease;
+}
+
+.photo-frame:hover {
+    transform:
+        rotate(0deg)
+        translateY(-5px);
+
+    box-shadow:
+        0 35px 95px rgba(65, 48, 39, 0.17);
+}
+
+.photo-frame::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.75);
+
+    border-radius: inherit;
+
+    pointer-events: none;
+
+    z-index: 2;
+}
+
+.photo-frame img,
+.photo-frame__image,
+.photo {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+    object-position: center;
+
+    border-radius:
+        1.8rem
+        0.9rem
+        1.45rem
+        1.15rem;
+
+    background: var(--cream-2);
+}
+
+.photo-caption {
+    max-width: 28rem;
+
+    text-align: center;
+}
+
+.photo-caption__small {
+    margin: 0 0 0.3rem;
+
+    color: var(--ink-muted);
+
+    font-size: var(--fs-sm);
+}
+
+.photo-caption__main {
+    margin: 0;
+
+    font-family: var(--font-display);
+
+    font-size:
+        clamp(
+            1.8rem,
+            1.3rem + 1.5vw,
+            3rem
+        );
+
+    line-height: 1;
+}
+
+.photo-caption__ending {
+    margin: 0.8rem 0 0;
+
+    color: var(--brown);
+
+    font-family: var(--font-hand);
+
+    font-size:
+        clamp(
+            1.35rem,
+            1rem + 0.9vw,
+            1.9rem
+        );
+}
+
+
+/* =========================================================
+   17. SCENE 07 — EMOTIONAL TURN
+   ========================================================= */
+
+.transition-scene {
+    text-align: center;
+}
+
+.transition-scene__line {
+    width: min(100%, 42rem);
+
+    margin: 0 auto;
+
+    color: var(--ink-soft);
+
+    font-family: var(--font-display);
+
+    font-size:
+        clamp(
+            1.35rem,
+            1rem + 1vw,
+            2rem
+        );
+
+    line-height: 1.45;
+}
+
+.transition-scene__main {
+    width: min(100%, 50rem);
+
+    margin: 0 auto;
+
+    color: var(--brown-deep);
+
+    font-family: var(--font-display);
+
+    font-size:
+        clamp(
+            2rem,
+            1.35rem + 2.7vw,
+            4.6rem
+        );
+
+    font-weight: 500;
+
+    line-height: 1.02;
+
+    letter-spacing: -0.035em;
+
+    text-wrap: balance;
+}
+
+.transition-scene__english {
+    width: min(100%, 36rem);
+
+    margin: 0 auto;
+
+    color: var(--ink-muted);
+
+    font-size:
+        clamp(
+            0.9rem,
+            0.82rem + 0.25vw,
+            1.08rem
+        );
+
+    line-height: 1.8;
+
+    font-style: italic;
+}
+
+
+/* =========================================================
+   18. SCENE 08 — LETTER / TYPING
+   ========================================================= */
+
+.letter-wrap {
+    width: min(
+        100%,
+        58rem
+    );
+
+    margin-inline: auto;
+}
+
+.letter-intro {
+    margin-bottom:
+        clamp(
+            1.5rem,
+            4vw,
+            3rem
+        );
+
+    text-align: center;
+}
+
+.letter-intro__small {
+    margin: 0 0 0.75rem;
+
+    color: var(--ink-muted);
+
+    font-size: var(--fs-sm);
+}
+
+.letter-intro__title {
+    margin: 0;
+
+    color: var(--brown-deep);
+
+    font-family: var(--font-display);
+
+    font-size:
+        clamp(
+            2rem,
+            1.35rem + 2vw,
+            3.5rem
+        );
+
+    font-weight: 500;
+
+    line-height: 1.02;
+}
+
+
+/*
+   Main letter card.
+
+   Deliberately paper-like rather than glossy.
+*/
+
+.letter {
+    width: 100%;
+
+    padding:
+        clamp(1.2rem, 4vw, 3.2rem);
+
+    border:
+        1px solid rgba(140, 107, 89, 0.12);
+
+    border-radius:
+        1.6rem
+        1rem
+        1.8rem
+        1.2rem;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 254, 250, 0.95),
+            rgba(251, 247, 239, 0.93)
+        );
+
+    box-shadow:
+        0 25px 90px rgba(65, 48, 39, 0.09);
+
+    text-align: left;
+}
+
+.letter__paragraph {
+    margin: 0;
+
+    color: var(--ink-soft);
+
+    font-size:
+        clamp(
+            0.93rem,
+            0.86rem + 0.18vw,
+            1.08rem
+        );
+
+    line-height:
+        clamp(
+            1.78,
+            1.68 + 0.15vw,
+            1.95
+        );
+}
+
+.letter__paragraph + .letter__paragraph {
+    margin-top:
+        clamp(
+            1rem,
+            2vw,
+            1.65rem
+        );
+}
+
+.letter__emphasis {
+    margin:
+        clamp(1.6rem, 4vw, 2.8rem)
+        0;
+
+    color: var(--brown-deep);
+
+    font-family: var(--font-display);
+
+    font-size:
+        clamp(
+            1.45rem,
+            1rem + 1vw,
+            2.25rem
+        );
+
+    line-height: 1.2;
+
+    text-align: center;
+}
+
+.letter__english {
+    margin:
+        clamp(1.6rem, 4vw, 2.8rem)
+        0;
+
+    padding-left:
+        clamp(0.9rem, 2vw, 1.5rem);
+
+    border-left:
+        2px solid var(--rose-soft);
+
+    color: var(--brown-deep);
+
+    font-family: var(--font-display);
+
+    font-size:
+        clamp(
+            1.1rem,
+            0.95rem + 0.55vw,
+            1.55rem
+        );
+
+    line-height: 1.65;
+}
+
+.letter__signature {
+    margin-top:
+        clamp(2rem, 5vw, 3.5rem);
+
+    padding-top:
+        1.25rem;
+
+    border-top:
+        1px dashed rgba(140, 107, 89, 0.18);
+
+    color: var(--brown);
+
+    font-family: var(--font-hand);
+
+    font-size:
+        clamp(
+            1.15rem,
+            1rem + 0.55vw,
+            1.6rem
+        );
+}
+
+
+/* ---------- Natural typing cursor ---------- */
+
+.typing-target {
+    position: relative;
+}
+
+.typing-target::after {
+    content: "";
+
+    display: inline-block;
+
+    width: 1px;
+    height: 1.05em;
+
+    margin-left: 0.12em;
+
+    vertical-align: -0.12em;
+
+    background: currentColor;
+
+    opacity: 0.55;
+
+    animation:
+        typingCursor
+        900ms
+        steps(1)
+        infinite;
+}
+
+.typing-target.is-complete::after,
+.typing-target[data-complete="true"]::after {
+    opacity: 0;
+
+    animation: none;
+}
+
+
+/* =========================================================
+   19. SCENE 09 — QUIET BREATH
+   ========================================================= */
+
+.quiet-scene {
+    text-align: center;
+}
+
+.quiet-scene__main {
+    width: min(100%, 38rem);
+
+    margin: 0 auto;
+
+    color: var(--brown-deep);
+
+    font-family: var(--font-display);
+
+    font-size:
+        clamp(
+            2rem,
+            1.35rem + 2vw,
+            3.8rem
+        );
+
+    font-weight: 500;
+
+    line-height: 1.05;
+
+    letter-spacing: -0.025em;
+}
+
+.quiet-scene__english {
+    width: min(100%, 34rem);
+
+    margin: 0 auto;
+
+    color: var(--ink-muted);
+
+    font-size:
+        clamp(
+            0.92rem,
+            0.84rem + 0.2vw,
+            1.08rem
+        );
+
+    line-height: 1.9;
+
+    font-style: italic;
+}
+
+.quiet-scene__small {
+    width: min(100%, 28rem);
+
+    margin: 0 auto;
+
+    color: var(--ink-soft);
+
+    font-size: var(--fs-sm);
+
+    line-height: 1.75;
+}
+
+
+/*
+   No giant YOU ARE LOVED typography.
+   The scene is intentionally quiet.
+*/
+
+.quiet-mark {
+    width: 3.5rem;
+    height: 1px;
+
+    margin-inline: auto;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--rose-soft),
+            transparent
+        );
+}
+
+
+/* =========================================================
+   20. SCENE 10 — FINAL / CONFESSION
+   ========================================================= */
+
+.final-scene {
+    text-align: center;
+}
+
+.final-scene__prelude {
+    margin: 0;
+
+    color: rgba(255, 253, 248, 0.55);
+
+    font-size: var(--fs-sm);
+
+    letter-spacing: 0.08em;
+}
+
+.final-scene__small {
+    width: min(100%, 36rem);
+
+    margin: 0 auto;
+
+    color: rgba(255, 253, 248, 0.7);
+
+    font-family: var(--font-display);
+
+    font-size:
+        clamp(
+            1.05rem,
+            0.9rem + 0.4vw,
+            1.4rem
+        );
+
+    line-height: 1.7;
+}
+
+.final-scene__title {
+    max-width: 10ch;
+
+    margin-inline: auto;
+
+    color: var(--cream-0);
+
+    font-family: var(--font-display);
+
+    font-size:
+        clamp(
+            3rem,
+            1.9rem + 4.8vw,
+            6.5rem
+        );
+
+    font-weight: 500;
+
+    line-height: 0.95;
+
+    letter-spacing: -0.045em;
+}
+
+.final-scene__question {
+    width: min(100%, 46rem);
+
+    margin: 0 auto;
+
+    color: rgba(255, 253, 248, 0.92);
+
+    font-family: var(--font-display);
+
+    font-size:
+        clamp(
+            1.55rem,
+            1.1rem + 1.2vw,
+            2.55rem
+        );
+
+    line-height: 1.25;
+}
+
+.final-scene__answer {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 3.2rem;
+
+    padding:
+        0.8rem
+        1.4rem;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.2);
+
+    border-radius: var(--radius-pill);
+
+    color: var(--cream-0);
+
+    background:
+        rgba(255, 255, 255, 0.07);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    font-family: var(--font-hand);
+
+    font-size:
+        clamp(
+            1.1rem,
+            0.95rem + 0.5vw,
+            1.55rem
+        );
+
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.14);
+}
+
+
+/* ---------- Final stickers ---------- */
+
+.scene--final .sticker {
+    filter:
+        drop-shadow(
+            0 12px 18px rgba(0, 0, 0, 0.18)
+        );
+}
+
+
+/* ---------- Final button ---------- */
+
+.btn--final {
+    color: #332824;
+
+    background:
+        var(--cream-0);
+
+    border-color:
+        rgba(255, 253, 248, 0.7);
+
+    box-shadow:
+        0 18px 55px rgba(0, 0, 0, 0.18);
+}
+
+.btn--final:hover {
+    background: var(--white);
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.23);
+}
+
+
+/* =========================================================
+   21. EPILOGUE
+   ========================================================= */
+
+.epilogue {
+    width: min(100%, 44rem);
+
+    text-align: center;
+}
+
+.epilogue__small {
+    margin: 0;
+
+    color: rgba(255, 253, 248, 0.52);
+
+    font-size: var(--fs-xs);
+
+    letter-spacing: 0.16em;
+
+    text-transform: uppercase;
+}
+
+.epilogue__main {
+    margin:
+        1rem
+        auto
+        0;
+
+    color: var(--cream-0);
+
+    font-family: var(--font-display);
+
+    font-size:
+        clamp(
+            2rem,
+            1.35rem + 2.5vw,
+            4.2rem
+        );
+
+    line-height: 1.02;
+
+    font-weight: 500;
+}
+
+.epilogue__copy {
+    margin:
+        1.2rem
+        auto
+        0;
+
+    color:
+        rgba(
+            255,
+            253,
+            248,
+            0.68
+        );
+
+    font-size: var(--fs-md);
+
+    line-height: 1.8;
+}
+
+.epilogue__signature {
+    margin-top:
+        2.5rem;
+
+    color:
+        rgba(
+            255,
+            253,
+            248,
+            0.8
+        );
+
+    font-family: var(--font-hand);
+
+    font-size:
+        clamp(
+            1.3rem,
+            1rem + 0.7vw,
+            1.8rem
+        );
+}
+
+
+/* =========================================================
+   22. NAVIGATION / ACTION BUTTON SYSTEM
+   ========================================================= */
+
+/*
+   General button.
+
+   JS may use:
+   .next-btn
+   .scene-button
+   .nav-button
+   .btn
+
+   All receive the same architectural base.
+*/
+
+.btn,
+.next-btn,
+.scene-button,
+.nav-button,
+.action-button,
+button[data-next],
+button[data-action] {
+    position: relative;
+
+    min-height: 3rem;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 0.55rem;
+
+    padding:
+        0.78rem
+        1.25rem;
+
+    border:
+        1px solid rgba(140, 107, 89, 0.18);
+
+    border-radius: var(--radius-pill);
+
+    background:
+        rgba(255, 253, 248, 0.78);
+
+    color: var(--brown-deep);
+
+    font-size: var(--fs-sm);
+    font-weight: 650;
+
+    letter-spacing: 0.015em;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 9px 26px rgba(70, 51, 40, 0.07);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    overflow: hidden;
+
+    isolation: isolate;
+
+    transition:
+        transform 280ms var(--ease-spring),
+        box-shadow 280ms ease,
+        border-color 280ms ease,
+        background 280ms ease;
+}
+
+.btn::before,
+.next-btn::before,
+.scene-button::before,
+.nav-button::before,
+.action-button::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: -1;
+
+    background:
+        linear-gradient(
+            110deg,
+            transparent 20%,
+            rgba(255, 255, 255, 0.65) 50%,
+            transparent 80%
+        );
+
+    transform:
+        translateX(-120%);
+
+    transition:
+        transform 650ms var(--ease-soft);
+}
+
+.btn:hover::before,
+.next-btn:hover::before,
+.scene-button:hover::before,
+.nav-button:hover::before,
+.action-button:hover::before {
+    transform:
+        translateX(120%);
+}
+
+.btn:hover,
+.next-btn:hover,
+.scene-button:hover,
+.nav-button:hover,
+.action-button:hover {
+    transform:
+        translateY(-2px);
+
+    border-color:
+        rgba(140, 107, 89, 0.3);
+
+    box-shadow:
+        0 15px 36px rgba(70, 51, 40, 0.12);
+}
+
+.btn:active,
+.next-btn:active,
+.scene-button:active,
+.nav-button:active,
+.action-button:active {
+    transform:
+        translateY(0)
+        scale(0.97);
+}
+
+.btn:focus-visible,
+.next-btn:focus-visible,
+.scene-button:focus-visible,
+.nav-button:focus-visible,
+.action-button:focus-visible {
+    outline:
+        2px solid var(--rose);
+
+    outline-offset: 4px;
+}
+
+
+/* ---------- Button personalities ---------- */
+
+.btn--playful {
+    border-radius:
+        1rem
+        1.3rem
+        1rem
+        1.5rem;
+
+    transform: rotate(-0.5deg);
+}
+
+.btn--playful:hover {
+    transform:
+        rotate(0.4deg)
+        translateY(-3px);
+}
+
+.btn--memory {
+    background:
+        rgba(245, 238, 226, 0.9);
+
+    border-radius:
+        1.4rem
+        0.8rem
+        1.3rem
+        0.9rem;
+}
+
+.btn--quiet {
+    background:
+        rgba(255, 253, 248, 0.45);
+
+    box-shadow:
+        none;
+
+    border-color:
+        rgba(140, 107, 89, 0.12);
+}
+
+.btn--quiet:hover {
+    background:
+        rgba(255, 253, 248, 0.8);
+
+    box-shadow:
+        0 10px 30px rgba(70, 51, 40, 0.07);
+}
+
+.btn--sidequest {
+    background:
+        rgba(220, 228, 213, 0.65);
+
+    border-color:
+        rgba(154, 170, 139, 0.32);
+
+    color:
+        #5d6a53;
+}
+
+.btn--sidequest:hover {
+    background:
+        rgba(220, 228, 213, 0.9);
+}
+
+
+/* =========================================================
+   23. SPECIAL MUSIC / AUDIO NAVIGATION BUTTON
+   ========================================================= */
+
+/*
+   The scene containing the music transition gets a more
+   noticeable visual identity without becoming flashy.
+
+   Example:
+   <button class="btn btn--music">
+*/
+
+.btn--music,
+.music-button {
+    min-height: 3.3rem;
+
+    padding-inline:
+        1.35rem;
+
+    border-radius:
+        1.2rem;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 253, 248, 0.94),
+            rgba(244, 223, 219, 0.82)
+        );
+
+    border-color:
+        rgba(200, 137, 136, 0.28);
+
+    box-shadow:
+        0 12px 34px rgba(140, 107, 89, 0.1);
+}
+
+.btn--music::after,
+.music-button::after {
+    content: "";
+
+    position: absolute;
+
+    inset: -1px;
+
+    border:
+        1px solid rgba(200, 137, 136, 0.22);
+
+    border-radius: inherit;
+
+    opacity: 0;
+
+    transform: scale(0.94);
+
+    transition:
+        opacity 300ms ease,
+        transform 300ms var(--ease-soft);
+}
+
+.btn--music:hover::after,
+.music-button:hover::after {
+    opacity: 1;
+
+    transform: scale(1);
+}
+
+
+/*
+   Optional music icon.
+
+   JS can toggle:
+   .is-playing
+*/
+
+.music-button__icon,
+.btn--music .icon {
+    width: 1.25rem;
+    height: 1.25rem;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    background:
+        rgba(200, 137, 136, 0.13);
+}
+
+.music-button.is-playing .music-button__icon,
+.btn--music.is-playing .icon {
+    animation:
+        musicPulse
+        1.8s
+        ease-in-out
+        infinite;
+}
+
+
+/* =========================================================
+   24. NAVIGATION DOCK
+   ========================================================= */
+
+.scene-nav,
+.navigation,
+.nav-dock {
+    position: fixed;
+
+    z-index: 100;
+
+    left: 50%;
+
+    bottom:
+        calc(
+            1rem +
+            var(--safe-bottom)
+        );
+
+    transform:
+        translateX(-50%);
+
+    width:
+        min(
+            calc(100% - 2rem),
+            34rem
+        );
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 0.6rem;
+
+    pointer-events: none;
+}
+
+.scene-nav > *,
+.navigation > *,
+.nav-dock > * {
+    pointer-events: auto;
+}
+
+
+/*
+   Progress indicator.
+
+   Not a conventional browser scrollbar.
+*/
+
+.progress,
+.scene-progress {
+    position: fixed;
+
+    top:
+        calc(
+            0.75rem +
+            var(--safe-top)
+        );
+
+    left: 50%;
+
+    z-index: 100;
+
+    width:
+        min(
+            calc(100% - 2rem),
+            22rem
+        );
+
+    height: 2px;
+
+    transform:
+        translateX(-50%);
+
+    background:
+        rgba(140, 107, 89, 0.1);
+
+    border-radius: 999px;
+
+    overflow: hidden;
+}
+
+.progress__bar,
+.scene-progress__bar {
+    width: var(--progress, 0%);
+
+    height: 100%;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--rose-soft),
+            var(--brown)
+        );
+
+    transition:
+        width 700ms var(--ease-soft);
+}
+
+
+/* =========================================================
+   25. SCENE META / MICRO LABELS
+   ========================================================= */
+
+.scene-number {
+    position: absolute;
+
+    top:
+        calc(
+            1.25rem +
+            var(--safe-top)
+        );
+
+    right:
+        calc(
+            1.25rem +
+            var(--safe-right)
+        );
+
+    z-index: 20;
+
+    color: var(--ink-muted);
+
+    font-size:
+        0.68rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.16em;
+
+    opacity: 0.7;
+}
+
+.scene--final .scene-number,
+.scene--epilogue .scene-number {
+    color: rgba(255, 253, 248, 0.4);
+}
+
+
+/* =========================================================
+   26. REVEAL ANIMATIONS
+   ========================================================= */
+
+.reveal,
+[data-reveal] {
+    opacity: 0;
+
+    transform:
+        translateY(16px);
+
+    transition:
+        opacity 700ms var(--ease-soft),
+        transform 850ms var(--ease-soft);
+}
+
+.scene.is-active .reveal,
+.scene.is-active [data-reveal],
+.scene.active .reveal,
+.scene.active [data-reveal] {
+    opacity: 1;
+
+    transform:
+        translateY(0);
+}
+
+
+/* stagger helpers */
+
+.scene.is-active .delay-1 {
+    transition-delay: 100ms;
+}
+
+.scene.is-active .delay-2 {
+    transition-delay: 220ms;
+}
+
+.scene.is-active .delay-3 {
+    transition-delay: 360ms;
+}
+
+.scene.is-active .delay-4 {
+    transition-delay: 520ms;
+}
+
+.scene.is-active .delay-5 {
+    transition-delay: 700ms;
+}
+
+.scene.is-active .delay-6 {
+    transition-delay: 900ms;
+}
+
+
+/* =========================================================
+   27. FLOATING PARTICLES / DECORATIVE DOTS
+   ========================================================= */
+
+.decor-dot {
+    position: absolute;
+
+    width: 0.35rem;
+    aspect-ratio: 1;
+
+    border-radius: 50%;
+
+    background:
+        rgba(140, 107, 89, 0.25);
+
+    pointer-events: none;
+
+    animation:
+        gentleFloat
+        6s
+        ease-in-out
+        infinite;
+}
+
+.decor-dot--1 {
+    top: 20%;
+    left: 13%;
+}
+
+.decor-dot--2 {
+    top: 33%;
+    right: 11%;
+
+    width: 0.24rem;
+
+    animation-delay: -2s;
+}
+
+.decor-dot--3 {
+    bottom: 21%;
+    left: 20%;
+
+    width: 0.22rem;
+
+    animation-delay: -4s;
+}
+
+
+/* =========================================================
+   28. ACCESSIBILITY / TOUCH
+   ========================================================= */
+
+button,
+a,
+[role="button"] {
+    -webkit-tap-highlight-color:
+        transparent;
+}
+
+button {
+    touch-action: manipulation;
+}
+
+button[disabled],
+[aria-disabled="true"] {
+    cursor: default;
+
+    opacity: 0.55;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   29. RESPONSIVE — SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    :root {
+        --page-pad: 1rem;
+    }
+
+    body {
+        font-size: 15px;
+    }
+
+    .scene {
+        align-items: flex-start;
+
+        padding-top:
+            calc(
+                3.8rem +
+                var(--safe-top)
+            );
+
+        padding-bottom:
+            calc(
+                5.7rem +
+                var(--safe-bottom)
+            );
+    }
+
+    .scene__inner,
+    .scene-inner,
+    .scene-content {
+        min-height: auto;
+
+        justify-content: flex-start;
+
+        padding-block: 1rem 2rem;
+
+        gap: 1.25rem;
+    }
+
+    .scene--intro .scene__inner,
+    .scene--final .scene__inner,
+    .scene--epilogue .scene__inner {
+        min-height:
+            calc(
+                100dvh -
+                9rem
+            );
+
+        justify-content: center;
+    }
+
+    .hero-title,
+    .scene__title {
+        font-size:
+            clamp(
+                2.7rem,
+                13vw,
+                4rem
+            );
+    }
+
+    .intro__hello,
+    .intro-title {
+        font-size:
+            clamp(
+                3rem,
+                15vw,
+                4.6rem
+            );
+    }
+
+    .message {
+        padding: 1.1rem;
+
+        border-radius: 1.35rem;
+    }
+
+    .timeline {
+        grid-template-columns: 1fr;
+
+        gap: 0.85rem;
+    }
+
+    .timeline::before {
+        top: 1rem;
+        bottom: 1rem;
+        left: 1.25rem;
+
+        width: 1px;
+        height: auto;
+    }
+
+    .timeline-card {
+        min-height: auto;
+
+        padding-left: 4rem;
+    }
+
+    .timeline-card__index {
+        position: absolute;
+
+        left: 0.75rem;
+        top: 1.1rem;
+    }
+
+    .traits,
+    .memory-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .memory-card--hydroponic {
+        grid-column: auto;
+    }
+
+    .photo-frame {
+        width: min(100%, 22rem);
+
+        aspect-ratio: 4 / 5;
+
+        border-radius: 1.8rem 1rem 1.5rem 1.2rem;
+    }
+
+    .letter {
+        padding: 1.15rem;
+
+        border-radius: 1.2rem;
+    }
+
+    .letter__paragraph {
+        font-size: 0.95rem;
+        line-height: 1.82;
+    }
+
+    .letter__english {
+        padding-left: 0.8rem;
+    }
+
+    .scene-nav,
+    .navigation,
+    .nav-dock {
+        width:
+            calc(
+                100% -
+                1.5rem
+            );
+
+        bottom:
+            calc(
+                0.75rem +
+                var(--safe-bottom)
+            );
+    }
+
+    .btn,
+    .next-btn,
+    .scene-button,
+    .nav-button,
+    .action-button,
+    button[data-next],
+    button[data-action] {
+        min-height: 2.9rem;
+
+        padding:
+            0.72rem
+            1rem;
+
+        font-size: 0.82rem;
+    }
+
+    .sticker {
+        width: 3.2rem;
+    }
+}
+
+
+/* =========================================================
+   30. RESPONSIVE — TABLET
+   ========================================================= */
+
+@media (min-width: 481px) and (max-width: 900px) {
+
+    .scene {
+        padding-inline:
+            clamp(1.25rem, 4vw, 2.5rem);
+
+        padding-top:
+            calc(
+                3rem +
+                var(--safe-top)
+            );
+
+        padding-bottom:
+            calc(
+                5rem +
+                var(--safe-bottom)
+            );
+    }
+
+    .timeline {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+    }
+
+    .traits {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+    }
+
+    .memory-grid {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+    }
+
+    .memory-card--hydroponic {
+        grid-column: span 2;
+    }
+
+    .photo-frame {
+        width: min(65vw, 28rem);
+    }
+}
+
+
+/* =========================================================
+   31. RESPONSIVE — LAPTOP / DESKTOP
+   ========================================================= */
+
+@media (min-width: 901px) {
+
+    .scene {
+        overflow-y: auto;
+    }
+
+    .scene__inner,
+    .scene-inner,
+    .scene-content {
+        min-height:
+            calc(
+                100dvh -
+                5rem
+            );
+    }
+
+    .scene--long .scene__inner,
+    .scene--letter .scene__inner,
+    .scene--timeline .scene__inner {
+        justify-content: center;
+
+        padding-block:
+            3rem
+            6rem;
+    }
+
+    .letter {
+        max-height:
+            calc(
+                100dvh -
+                10rem
+            );
+
+        overflow-y: auto;
+
+        scrollbar-width: thin;
+
+        scrollbar-color:
+            rgba(140, 107, 89, 0.2)
+            transparent;
+    }
+
+    .letter::-webkit-scrollbar,
+    .scene::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    .letter::-webkit-scrollbar-thumb,
+    .scene::-webkit-scrollbar-thumb {
+        background:
+            rgba(140, 107, 89, 0.18);
+
+        border-radius: 999px;
+    }
+
+    .letter::-webkit-scrollbar-track,
+    .scene::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .photo-frame {
+        width: min(34vw, 29rem);
+    }
+
+    .final-scene__title {
+        max-width: 9ch;
+    }
+}
+
+
+/* =========================================================
+   32. LARGE DESKTOP
+   ========================================================= */
+
+@media (min-width: 1440px) {
+
+    :root {
+        --page-pad: clamp(2rem, 4vw, 5rem);
+    }
+
+    .scene__inner,
+    .scene-inner,
+    .scene-content {
+        max-width: 90rem;
+    }
+
+    .timeline-card {
+        min-height: 14rem;
+    }
+
+    .memory-card {
+        min-height: 11rem;
+    }
+
+    .photo-frame {
+        width: 30rem;
+    }
+}
+
+
+/* =========================================================
+   33. SHORT VIEWPORTS
+   ========================================================= */
+
+/*
+   Prevent giant typography from being vertically clipped
+   on laptops with low browser height.
+*/
+
+@media (max-height: 720px) and (min-width: 700px) {
+
+    .scene {
+        align-items: flex-start;
+
+        padding-top:
+            calc(
+                3rem +
+                var(--safe-top)
+            );
+
+        padding-bottom:
+            calc(
+                4rem +
+                var(--safe-bottom)
+            );
+    }
+
+    .scene__inner,
+    .scene-inner,
+    .scene-content {
+        min-height: auto;
+
+        padding-block:
+            1rem
+            3rem;
+    }
+
+    .hero-title,
+    .scene__title {
+        font-size:
+            clamp(
+                2.7rem,
+                7vw,
+                4.8rem
+            );
+    }
+
+    .photo-frame {
+        width: min(35vh, 24rem);
+    }
+
+    .letter {
+        max-height:
+            calc(
+                100dvh -
+                7rem
+            );
+    }
+}
+
+
+/* =========================================================
+   34. ULTRA-WIDE / VERY LARGE SCREEN
+   ========================================================= */
+
+@media (min-width: 1800px) {
+
+    .scene__inner,
+    .scene-inner,
+    .scene-content {
+        width: min(100%, 90rem);
+    }
+
+    .timeline {
+        width: min(100%, 72rem);
+    }
+
+    .memory-grid {
+        width: min(100%, 72rem);
+    }
+}
+
+
+/* =========================================================
+   35. REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .scene {
+        transition:
+            opacity 180ms ease,
+            visibility 0s linear 180ms;
+    }
+
+    .scene.is-active,
+    .scene.active,
+    .scene[data-active="true"] {
+        transition:
+            opacity 180ms ease,
+            visibility 0s linear 0s;
+    }
+}
+
+
+/* =========================================================
+   36. KEYFRAMES
+   ========================================================= */
+
+@keyframes stickerFloat {
+
+    0%,
+    100% {
+        margin-top: 0;
+    }
+
+    50% {
+        margin-top: -5px;
+    }
+}
+
+
+@keyframes gentleFloat {
+
+    0%,
+    100% {
+        transform:
+            translate3d(0, 0, 0);
+    }
+
+    50% {
+        transform:
+            translate3d(
+                0,
+                -7px,
+                0
+            );
+    }
+}
+
+
+@keyframes typingCursor {
+
+    0%,
+    48% {
+        opacity: 0;
+    }
+
+    49%,
+    100% {
+        opacity: 0.55;
+    }
+}
+
+
+@keyframes musicPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        box-shadow:
+            0 0 0 0
+            rgba(200, 137, 136, 0.14);
+    }
+
+    50% {
+        transform: scale(1.08);
+        box-shadow:
+            0 0 0 7px
+            rgba(200, 137, 136, 0);
+    }
+}
+
+
+/* =========================================================
+   37. SAFETY AGAINST LONG TEXT / OVERFLOW
+   ========================================================= */
+
+.scene h1,
+.scene h2,
+.scene h3,
+.scene p {
+    overflow-wrap: break-word;
+}
+
+.scene h1,
+.scene h2,
+.scene h3 {
+    max-width: 100%;
+}
+
+.scene p {
+    max-width: 100%;
+}
+
+.letter,
+.message,
+.timeline-card,
+.trait-card,
+.memory-card,
+.sidequest {
+    min-width: 0;
+}
+
+
+/* =========================================================
+   38. HIDE / SHOW HELPERS FOR JS
+   ========================================================= */
+
+.is-hidden {
+    display: none !important;
+}
+
+.is-visible {
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.is-interactive {
+    pointer-events: auto !important;
+}
+
+
+/* =========================================================
+   39. FINAL VISUAL POLISH
+   ========================================================= */
+
+/*
+   Tiny details matter more than huge effects.
+*/
+
+.scene__inner::selection,
+.scene-content::selection,
+.letter::selection {
+    background:
+        var(--rose-pale);
+}
+
+
+/*
+   Prevent image dragging from making the interface feel
+   like a generic webpage.
+*/
+
+.photo-frame img,
+.sticker {
+    -webkit-user-drag: none;
+}
+
+
+/*
+   Elegant focus state for keyboard navigation.
+*/
+
+a:focus-visible,
+img:focus-visible {
+    outline:
+        2px solid var(--rose);
+
+    outline-offset: 4px;
+}
+
+
+/* =========================================================
+   40. END
+   ========================================================= */

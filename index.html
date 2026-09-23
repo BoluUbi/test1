@@ -1,0 +1,2675 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+
+  <!-- =========================================================
+       BOLU UBI 🐣
+       Personal Birthday Experience
+       Made by Tongzi 🤾‍♂️
+       ========================================================= -->
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  >
+
+  <meta
+    name="description"
+    content="A little something made especially for Bolu Ubi 🐣"
+  >
+
+  <meta name="theme-color" content="#f7efe3">
+
+  <title>Bolu Ubi 🐣</title>
+
+  <!-- =========================================================
+       PRECONNECT
+       ---------------------------------------------------------
+       Tidak ada font eksternal yang wajib.
+       CSS berikutnya dapat memilih system-safe typography
+       sehingga website tetap berjalan walaupun offline.
+       ========================================================= -->
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- =========================================================
+       OPTIONAL FAVICON
+       ---------------------------------------------------------
+       Jika nanti ingin menambahkan favicon, cukup letakkan
+       favicon di assets/favicon.png dan aktifkan baris berikut.
+
+       <link rel="icon" type="image/png" href="assets/favicon.png">
+       ========================================================= -->
+</head>
+
+<body>
+
+  <!-- =========================================================
+       APP SHELL
+       ========================================================= -->
+
+  <main
+    id="app"
+    class="app"
+    data-current-scene="1"
+    aria-label="Bolu Ubi birthday experience"
+  >
+
+    <!-- =======================================================
+         BACKGROUND / ATMOSPHERIC LAYER
+         -------------------------------------------------------
+         Layer ini sengaja kosong secara semantic.
+         CSS akan menggunakannya untuk grain, glow, floating
+         particles, dan ambience tanpa mengganggu content.
+         ======================================================= -->
+
+    <div class="ambient-layer" aria-hidden="true">
+      <div class="ambient-grain"></div>
+      <div class="ambient-orb ambient-orb--one"></div>
+      <div class="ambient-orb ambient-orb--two"></div>
+      <div class="ambient-orb ambient-orb--three"></div>
+    </div>
+
+
+    <!-- =======================================================
+         SCENE PROGRESS
+         -------------------------------------------------------
+         Bukan scrollbar.
+         Hanya indikator perjalanan.
+         JS akan mengubah aria-current dan data-scene.
+         ======================================================= -->
+
+    <nav
+      class="scene-progress"
+      id="sceneProgress"
+      aria-label="Progress perjalanan"
+    >
+      <button
+        class="scene-progress__item is-active"
+        type="button"
+        data-progress-target="1"
+        aria-label="Kembali ke awal"
+        aria-current="true"
+      >
+        <span class="scene-progress__dot"></span>
+      </button>
+
+      <button
+        class="scene-progress__item"
+        type="button"
+        data-progress-target="2"
+        aria-label="Scene 2"
+      >
+        <span class="scene-progress__dot"></span>
+      </button>
+
+      <button
+        class="scene-progress__item"
+        type="button"
+        data-progress-target="3"
+        aria-label="Scene 3"
+      >
+        <span class="scene-progress__dot"></span>
+      </button>
+
+      <button
+        class="scene-progress__item"
+        type="button"
+        data-progress-target="4"
+        aria-label="Scene 4"
+      >
+        <span class="scene-progress__dot"></span>
+      </button>
+
+      <button
+        class="scene-progress__item"
+        type="button"
+        data-progress-target="5"
+        aria-label="Scene 5"
+      >
+        <span class="scene-progress__dot"></span>
+      </button>
+
+      <button
+        class="scene-progress__item"
+        type="button"
+        data-progress-target="6"
+        aria-label="Scene 6"
+      >
+        <span class="scene-progress__dot"></span>
+      </button>
+
+      <button
+        class="scene-progress__item"
+        type="button"
+        data-progress-target="7"
+        aria-label="Scene 7"
+      >
+        <span class="scene-progress__dot"></span>
+      </button>
+
+      <button
+        class="scene-progress__item"
+        type="button"
+        data-progress-target="8"
+        aria-label="Scene 8"
+      >
+        <span class="scene-progress__dot"></span>
+      </button>
+
+      <button
+        class="scene-progress__item"
+        type="button"
+        data-progress-target="9"
+        aria-label="Scene 9"
+      >
+        <span class="scene-progress__dot"></span>
+      </button>
+
+      <button
+        class="scene-progress__item"
+        type="button"
+        data-progress-target="10"
+        aria-label="Scene 10"
+      >
+        <span class="scene-progress__dot"></span>
+      </button>
+    </nav>
+
+
+    <!-- =======================================================
+         AUDIO
+         -------------------------------------------------------
+         IMPORTANT:
+         - Tidak autoplay.
+         - music1 dimulai oleh user gesture pada Scene 1.
+         - music1 dihentikan sebelum music2 dimainkan.
+         - JS akan mengatur volume + fade.
+         ======================================================= -->
+
+    <audio
+      id="music1"
+      class="site-audio"
+      preload="metadata"
+      loop
+      playsinline
+      aria-hidden="true"
+    >
+      <source src="music1.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio
+      id="music2"
+      class="site-audio"
+      preload="metadata"
+      loop
+      playsinline
+      aria-hidden="true"
+    >
+      <source src="music2.mp3" type="audio/mpeg">
+    </audio>
+
+
+    <!-- =======================================================
+         AUDIO STATUS
+         -------------------------------------------------------
+         Visual kecil.
+         CSS akan menentukan kapan terlihat.
+         JS menggunakannya untuk memberi feedback.
+         ======================================================= -->
+
+    <div
+      class="audio-status"
+      id="audioStatus"
+      aria-live="polite"
+      aria-atomic="true"
+    >
+      <span class="audio-status__icon" aria-hidden="true">♪</span>
+      <span class="audio-status__text">music is quiet for now</span>
+    </div>
+
+
+    <!-- =======================================================
+         SCENE 01
+         THE ENTRANCE
+         ======================================================= -->
+
+    <section
+      class="scene scene--entrance is-active"
+      id="scene-1"
+      data-scene="1"
+      data-scene-name="entrance"
+      aria-labelledby="scene1-title"
+      aria-hidden="false"
+    >
+
+      <div class="scene__inner scene__inner--center">
+
+        <div class="entrance-copy">
+
+          <p class="eyebrow entrance-copy__whisper">
+            pssst...
+          </p>
+
+          <h1
+            id="scene1-title"
+            class="entrance-copy__title"
+          >
+            aalooo bolu ubiii🐣
+          </h1>
+
+          <p class="entrance-copy__subtitle">
+            someone made something for u.
+          </p>
+
+        </div>
+
+
+        <div class="entrance-action">
+
+          <button
+            class="scene-button scene-button--primary scene-button--entrance"
+            id="enterButton"
+            type="button"
+            data-next-scene="2"
+            data-start-music="music1"
+            aria-label="Buka sesuatu yang dibuat untuk Bolu Ubi"
+          >
+
+            <span class="scene-button__label">
+              bukaa duluuu
+            </span>
+
+            <span
+              class="scene-button__icon"
+              aria-hidden="true"
+            >
+              ♡
+            </span>
+
+          </button>
+
+          <p class="entrance-action__hint">
+            pelan-pelan ajaa.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         SCENE 02
+         THE BIRTHDAY GIRL
+         ======================================================= -->
+
+    <section
+      class="scene scene--birthday"
+      id="scene-2"
+      data-scene="2"
+      data-scene-name="birthday"
+      aria-labelledby="scene2-title"
+      aria-hidden="true"
+    >
+
+      <div class="scene__inner scene__inner--birthday">
+
+        <!-- Decorative stickers -->
+        <div class="sticker-slot sticker-slot--scene2-a" aria-hidden="true">
+          <img
+            src="stiker1.png"
+            alt=""
+            class="sticker"
+            loading="lazy"
+          >
+        </div>
+
+        <div class="sticker-slot sticker-slot--scene2-b" aria-hidden="true">
+          <img
+            src="stiker2.png"
+            alt=""
+            class="sticker"
+            loading="lazy"
+          >
+        </div>
+
+        <header class="scene-heading scene-heading--birthday">
+
+          <p class="scene-heading__small">
+            oh iya...
+          </p>
+
+          <h2
+            id="scene2-title"
+            class="scene-heading__title"
+          >
+            umm mungkin aku seharusnya skrng
+            manggil km nenek talita kali yak,
+            wleee.
+          </h2>
+
+          <p class="scene-heading__support">
+            bhaap. walaupun cuman beda 1 tahun doang sihh. hehee
+          </p>
+
+        </header>
+
+
+        <!-- Mathematical age reveal -->
+
+        <div
+          class="age-reveal"
+          id="ageReveal"
+          aria-label="Persamaan yang menghasilkan usia Tata"
+        >
+
+          <p class="age-reveal__intro">
+            ndak kerasa yoo,<br>
+            skrng km uda segini aja umurnya...
+          </p>
+
+          <div class="math-display" aria-label="Persamaan matematika">
+
+            <div class="math-display__equation">
+
+              <span class="math-fragment math-fragment--gamma">
+                Γ
+              </span>
+
+              <span class="math-fragment math-fragment--integral">
+                ∫
+              </span>
+
+              <span class="math-fragment math-fragment--det">
+                det
+              </span>
+
+              <span class="math-fragment math-fragment--exp">
+                exp
+              </span>
+
+            </div>
+
+            <!--
+              MathJax-ready semantic source.
+
+              Tidak bergantung pada MathJax untuk sekadar
+              menampilkan website. JS/CSS dapat memilih apakah
+              source ini dirender atau menggunakan visual fallback.
+            -->
+
+            <div
+              class="math-display__latex"
+              id="ageEquation"
+              data-math-source="
+                \boxed{
+                \displaystyle
+                \frac{
+                \Gamma^{\,2}\!\left(
+                \sum_{k=1}^{4}
+                \frac{\Gamma(k)}{\Gamma(k)}
+                \right)
+                }{
+                \Gamma\!\left(
+                \sum_{k=1}^{3}
+                \frac{\Gamma(k)}{\Gamma(k)}
+                \right)
+                }
+                \,
+                \frac{
+                \displaystyle
+                \int_{\mathbb R}
+                e^{-\lVert x\rVert^2}\,d x
+                }{
+                \displaystyle
+                \sqrt{\det(\pi I)}
+                }
+                \,
+                \exp\!\left[
+                \frac{1}{2\pi i}
+                \oint_{\partial\mathbb D}
+                \frac{dz}{z}
+                -1
+                \right]
+                \,
+                \det\!\left(
+                e^{\operatorname{tr}(A)}
+                e^{-A}
+                \right)
+                }
+              "
+            >
+              <span class="math-fallback">
+                18
+              </span>
+            </div>
+
+          </div>
+
+          <p class="age-reveal__punchline">
+            dah makin tua ajee nih, bhapp
+          </p>
+
+        </div>
+
+
+        <!-- Sticker on the mathematical reveal -->
+
+        <div
+          class="sticker-slot sticker-slot--scene2-c"
+          aria-hidden="true"
+        >
+          <img
+            src="stiker2.png"
+            alt=""
+            class="sticker"
+            loading="lazy"
+          >
+        </div>
+
+
+        <!-- Small celebration -->
+
+        <div class="birthday-mini-note">
+          <span class="birthday-mini-note__mark">18</span>
+          <span class="birthday-mini-note__text">
+            unlocked... apparently.
+          </span>
+        </div>
+
+
+        <div class="scene-navigation scene-navigation--birthday">
+
+          <button
+            class="scene-button scene-button--soft"
+            type="button"
+            data-next-scene="3"
+            aria-label="Lanjut ke cerita tentang bagaimana kalian pertama kali bertemu"
+          >
+            <span class="scene-button__label">
+              kita flashback dl kali yee
+            </span>
+            <span class="scene-button__icon" aria-hidden="true">
+              →
+            </span>
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         SCENE 03
+         THE TIMELINE
+         ======================================================= -->
+
+    <section
+      class="scene scene--timeline"
+      id="scene-3"
+      data-scene="3"
+      data-scene-name="timeline"
+      aria-labelledby="scene3-title"
+      aria-hidden="true"
+    >
+
+      <div class="scene__inner scene__inner--timeline">
+
+        <header class="timeline-intro">
+
+          <p class="timeline-intro__kicker">
+            sebelum semuanya jadi serandom sekarang...
+          </p>
+
+          <h2
+            id="scene3-title"
+            class="timeline-intro__title"
+          >
+            kita flashback dl kali yee
+          </h2>
+
+          <p class="timeline-intro__subtitle">
+            ternyata ceritanya lumayan panjang juga wok😭
+          </p>
+
+        </header>
+
+
+        <div
+          class="timeline"
+          id="relationshipTimeline"
+          role="list"
+          aria-label="Timeline perjalanan kalian"
+        >
+
+          <!-- =========================
+               TIMELINE 01
+               ========================= -->
+
+          <article
+            class="timeline-card timeline-card--active"
+            data-timeline-item="1"
+            role="listitem"
+          >
+
+            <div class="timeline-card__date">
+              November 2024
+            </div>
+
+            <div class="timeline-card__number">
+              01
+            </div>
+
+            <div class="timeline-card__body">
+
+              <p class="timeline-card__eyebrow">
+                OSN MTK
+              </p>
+
+              <h3 class="timeline-card__title">
+                waktu itu kita tau muka.
+              </h3>
+
+              <div class="timeline-card__details">
+
+                <p>
+                  tau nama.
+                </p>
+
+                <p>
+                  tau muka.
+                </p>
+
+                <p>
+                  ngobrol? kagak.
+                </p>
+
+                <p>
+                  interaksi? boro boro.
+                </p>
+
+                <p class="timeline-card__punchline">
+                  nyangka suatu hari kita bakal sedeket ini?
+                  inimah apalagi😭😭😭
+                </p>
+
+              </div>
+
+            </div>
+
+          </article>
+
+
+          <!-- =========================
+               TIMELINE 02
+               ========================= -->
+
+          <article
+            class="timeline-card"
+            data-timeline-item="2"
+            role="listitem"
+          >
+
+            <div class="timeline-card__date">
+              Juli 2025
+            </div>
+
+            <div class="timeline-card__number">
+              02
+            </div>
+
+            <div class="timeline-card__body">
+
+              <p class="timeline-card__eyebrow">
+                KELAS 11
+              </p>
+
+              <h3 class="timeline-card__title">
+                akhirnya jadi temen sekelas.
+              </h3>
+
+              <div class="timeline-card__details">
+
+                <p>
+                  mulai satu kelas.
+                </p>
+
+                <p>
+                  mulai lebih sering ketemu.
+                </p>
+
+                <p>
+                  tapi yaa...
+                </p>
+
+                <p class="timeline-card__punchline">
+                  masih biasa ajaa.
+                </p>
+
+              </div>
+
+            </div>
+
+          </article>
+
+
+          <!-- =========================
+               TIMELINE 03
+               ========================= -->
+
+          <article
+            class="timeline-card"
+            data-timeline-item="3"
+            role="listitem"
+          >
+
+            <div class="timeline-card__date">
+              Awal 2026
+            </div>
+
+            <div class="timeline-card__number">
+              03
+            </div>
+
+            <div class="timeline-card__body">
+
+              <p class="timeline-card__eyebrow">
+                PROJECT KOKU
+              </p>
+
+              <h3 class="timeline-card__title">
+                mulai lebih sering ketemu.
+              </h3>
+
+              <div class="timeline-card__details">
+
+                <p>
+                  latihan.
+                </p>
+
+                <p>
+                  persiapan.
+                </p>
+
+                <p>
+                  ngobrol.
+                </p>
+
+                <p>
+                  ketawa.
+                </p>
+
+                <p>
+                  dan entah gimana...
+                  semuanya mulai terasa lebih dekat.
+                </p>
+
+              </div>
+
+            </div>
+
+          </article>
+
+
+          <!-- =========================
+               TIMELINE 04
+               ========================= -->
+
+          <article
+            class="timeline-card timeline-card--important"
+            data-timeline-item="4"
+            role="listitem"
+          >
+
+            <div class="timeline-card__date">
+              Senin, 1 Juni 2026
+            </div>
+
+            <div class="timeline-card__number">
+              04
+            </div>
+
+            <div class="timeline-card__body">
+
+              <p class="timeline-card__eyebrow">
+                THE TURNING POINT
+              </p>
+
+              <h3 class="timeline-card__title">
+                satu tanggal yang
+                akhirnya punya arti sendiri.
+              </h3>
+
+              <div class="timeline-card__details">
+
+                <p>
+                  bukan awal dari semuanya.
+                </p>
+
+                <p>
+                  tapi mungkin...
+                  salah satu titik yang bikin
+                  semuanya terasa lebih nyata.
+                </p>
+
+              </div>
+
+            </div>
+
+          </article>
+
+        </div>
+
+
+        <div class="timeline-closing">
+
+          <p class="timeline-closing__line">
+            sometimes things don't have
+            one exact beginning.
+          </p>
+
+          <p class="timeline-closing__line timeline-closing__line--accent">
+            they just...
+            slowly happen.
+          </p>
+
+        </div>
+
+
+        <div class="scene-navigation">
+
+          <button
+            class="scene-button scene-button--soft"
+            type="button"
+            data-next-scene="4"
+          >
+            <span class="scene-button__label">
+              terus kalau dipikir-pikir...
+            </span>
+            <span class="scene-button__icon" aria-hidden="true">
+              →
+            </span>
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         SCENE 04
+         SUBTLE THINGS I NOTICE
+         ======================================================= -->
+
+    <section
+      class="scene scene--traits"
+      id="scene-4"
+      data-scene="4"
+      data-scene-name="traits"
+      aria-labelledby="scene4-title"
+      aria-hidden="true"
+    >
+
+      <div class="scene__inner scene__inner--traits">
+
+        <header class="traits-heading">
+
+          <p class="traits-heading__kicker">
+            ternyata ada beberapa hal kecil
+            yang suka ke-notice...
+          </p>
+
+          <h2
+            id="scene4-title"
+            class="traits-heading__title"
+          >
+            things i somehow
+            keep noticing about you.
+          </h2>
+
+        </header>
+
+
+        <div
+          class="traits-grid"
+          id="traitsGrid"
+          aria-label="Hal-hal kecil tentang Tata"
+        >
+
+          <!-- TRAIT 01 -->
+
+          <article class="trait-card">
+
+            <button
+              class="trait-card__trigger"
+              type="button"
+              aria-expanded="false"
+              aria-controls="trait-content-1"
+              data-trait="1"
+            >
+
+              <span class="trait-card__number">
+                01
+              </span>
+
+              <span class="trait-card__symbol">
+                +
+              </span>
+
+              <span class="trait-card__label">
+                yang ceria itu.
+              </span>
+
+            </button>
+
+            <div
+              class="trait-card__content"
+              id="trait-content-1"
+              hidden
+            >
+              <p>
+                entah kenapa suasana jadi lebih enak
+                kalau kamu lagi ceria.
+              </p>
+            </div>
+
+          </article>
+
+
+          <!-- TRAIT 02 -->
+
+          <article class="trait-card">
+
+            <button
+              class="trait-card__trigger"
+              type="button"
+              aria-expanded="false"
+              aria-controls="trait-content-2"
+              data-trait="2"
+            >
+
+              <span class="trait-card__number">
+                02
+              </span>
+
+              <span class="trait-card__symbol">
+                +
+              </span>
+
+              <span class="trait-card__label">
+                tanggung jawabmu.
+              </span>
+
+            </button>
+
+            <div
+              class="trait-card__content"
+              id="trait-content-2"
+              hidden
+            >
+              <p>
+                kamu bisa random,
+                tapi kalau soal sesuatu yang memang harus dikerjain,
+                kamu tetap tanggung jawab.
+              </p>
+            </div>
+
+          </article>
+
+
+          <!-- TRAIT 03 -->
+
+          <article class="trait-card">
+
+            <button
+              class="trait-card__trigger"
+              type="button"
+              aria-expanded="false"
+              aria-controls="trait-content-3"
+              data-trait="3"
+            >
+
+              <span class="trait-card__number">
+                03
+              </span>
+
+              <span class="trait-card__symbol">
+                +
+              </span>
+
+              <span class="trait-card__label">
+                sisi dewasamu.
+              </span>
+
+            </button>
+
+            <div
+              class="trait-card__content"
+              id="trait-content-3"
+              hidden
+            >
+              <p>
+                ada sisi kamu yang bikin aku sadar
+                kalau ternyata kamu jauh lebih dewasa
+                dari yang kadang kamu tunjukin.
+              </p>
+            </div>
+
+          </article>
+
+
+          <!-- TRAIT 04 -->
+
+          <article class="trait-card">
+
+            <button
+              class="trait-card__trigger"
+              type="button"
+              aria-expanded="false"
+              aria-controls="trait-content-4"
+              data-trait="4"
+            >
+
+              <span class="trait-card__number">
+                04
+              </span>
+
+              <span class="trait-card__symbol">
+                +
+              </span>
+
+              <span class="trait-card__label">
+                kalau lagi ngambek.
+              </span>
+
+            </button>
+
+            <div
+              class="trait-card__content"
+              id="trait-content-4"
+              hidden
+            >
+              <p>
+                ini tuh...
+                sebenarnya agak lucu sih😭
+              </p>
+            </div>
+
+          </article>
+
+
+          <!-- TRAIT 05 -->
+
+          <article class="trait-card">
+
+            <button
+              class="trait-card__trigger"
+              type="button"
+              aria-expanded="false"
+              aria-controls="trait-content-5"
+              data-trait="5"
+            >
+
+              <span class="trait-card__number">
+                05
+              </span>
+
+              <span class="trait-card__symbol">
+                +
+              </span>
+
+              <span class="trait-card__label">
+                sisi plengermu.
+              </span>
+
+            </button>
+
+            <div
+              class="trait-card__content"
+              id="trait-content-5"
+              hidden
+            >
+              <p>
+                yang ini juga jangan geer dulu.
+                tapi iya...
+                aku suka.
+              </p>
+            </div>
+
+          </article>
+
+
+          <!-- TRAIT 06 -->
+
+          <article class="trait-card">
+
+            <button
+              class="trait-card__trigger"
+              type="button"
+              aria-expanded="false"
+              aria-controls="trait-content-6"
+              data-trait="6"
+            >
+
+              <span class="trait-card__number">
+                06
+              </span>
+
+              <span class="trait-card__symbol">
+                +
+              </span>
+
+              <span class="trait-card__label">
+                randomnya kamu.
+              </span>
+
+            </button>
+
+            <div
+              class="trait-card__content"
+              id="trait-content-6"
+              hidden
+            >
+              <p>
+                mungkin justru karena nggak semuanya
+                bisa ditebak,
+                jadi kamu terasa... kamu.
+              </p>
+            </div>
+
+          </article>
+
+        </div>
+
+
+        <div class="traits-closing">
+
+          <p>
+            dan entah kenapa,
+            semua versi itu tetap kamu.
+          </p>
+
+          <p class="traits-closing__accent">
+            somehow, i like all of it.
+          </p>
+
+        </div>
+
+
+        <div class="scene-navigation">
+
+          <button
+            class="scene-button scene-button--soft"
+            type="button"
+            data-next-scene="5"
+          >
+            <span class="scene-button__label">
+              masih ada beberapa hal kecil...
+            </span>
+            <span class="scene-button__icon" aria-hidden="true">
+              →
+            </span>
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         SCENE 05
+         I KNOW YOU
+         ======================================================= -->
+
+    <section
+      class="scene scene--details"
+      id="scene-5"
+      data-scene="5"
+      data-scene-name="details"
+      aria-labelledby="scene5-title"
+      aria-hidden="true"
+    >
+
+      <div class="scene__inner scene__inner--details">
+
+        <header class="details-heading">
+
+          <p class="details-heading__kicker">
+            random little things
+          </p>
+
+          <h2
+            id="scene5-title"
+            class="details-heading__title"
+          >
+            yang somehow
+            jadi keinget.
+          </h2>
+
+        </header>
+
+
+        <div class="details-grid">
+
+          <!-- FRAPPE -->
+
+          <article class="detail-card detail-card--drink">
+
+            <button
+              class="detail-card__trigger"
+              type="button"
+              data-detail="frappe"
+              aria-expanded="false"
+              aria-controls="detail-frappe"
+            >
+
+              <span class="detail-card__icon" aria-hidden="true">
+                ☕
+              </span>
+
+              <span class="detail-card__label">
+                frappe kopken
+              </span>
+
+              <span class="detail-card__arrow" aria-hidden="true">
+                ↗
+              </span>
+
+            </button>
+
+            <div
+              class="detail-card__content"
+              id="detail-frappe"
+              hidden
+            >
+              <p>
+                entah kenapa satu minuman ini
+                cukup buat ngingetin aku ke kamu.
+              </p>
+            </div>
+
+          </article>
+
+
+          <!-- NASI GORENG -->
+
+          <article class="detail-card detail-card--food">
+
+            <button
+              class="detail-card__trigger"
+              type="button"
+              data-detail="nasigoreng"
+              aria-expanded="false"
+              aria-controls="detail-nasigoreng"
+            >
+
+              <span class="detail-card__icon" aria-hidden="true">
+                🍳
+              </span>
+
+              <span class="detail-card__label">
+                nasi goreng
+              </span>
+
+              <span class="detail-card__arrow" aria-hidden="true">
+                ↗
+              </span>
+
+            </button>
+
+            <div
+              class="detail-card__content"
+              id="detail-nasigoreng"
+              hidden
+            >
+              <p>
+                yes, this very important information
+                has somehow made it into the website.
+              </p>
+            </div>
+
+          </article>
+
+
+          <!-- HANDWRITING -->
+
+          <article class="detail-card detail-card--handwriting">
+
+            <button
+              class="detail-card__trigger"
+              type="button"
+              data-detail="handwriting"
+              aria-expanded="false"
+              aria-controls="detail-handwriting"
+            >
+
+              <span class="detail-card__icon" aria-hidden="true">
+                ✍🏻
+              </span>
+
+              <span class="detail-card__label">
+                tulisan tanganmu
+              </span>
+
+              <span class="detail-card__arrow" aria-hidden="true">
+                ↗
+              </span>
+
+            </button>
+
+            <div
+              class="detail-card__content"
+              id="detail-handwriting"
+              hidden
+            >
+              <p>
+                iya, tulisan tanganmu bagus.
+                ini bukan hasil voting.
+              </p>
+            </div>
+
+          </article>
+
+
+          <!-- BOLU UBI -->
+
+          <article class="detail-card detail-card--nickname">
+
+            <button
+              class="detail-card__trigger"
+              type="button"
+              data-detail="boluubi"
+              aria-expanded="false"
+              aria-controls="detail-boluubi"
+            >
+
+              <span class="detail-card__icon" aria-hidden="true">
+                🐣
+              </span>
+
+              <span class="detail-card__label">
+                bolu ubi
+              </span>
+
+              <span class="detail-card__arrow" aria-hidden="true">
+                ↗
+              </span>
+
+            </button>
+
+            <div
+              class="detail-card__content"
+              id="detail-boluubi"
+              hidden
+            >
+              <p>
+                nama panggilan yang entah sejak kapan
+                terasa normal banget dipakai.
+              </p>
+            </div>
+
+          </article>
+
+
+          <!-- TONGZI -->
+
+          <article class="detail-card detail-card--signature">
+
+            <button
+              class="detail-card__trigger"
+              type="button"
+              data-detail="tongzi"
+              aria-expanded="false"
+              aria-controls="detail-tongzi"
+            >
+
+              <span class="detail-card__icon" aria-hidden="true">
+                🤾‍♂️
+              </span>
+
+              <span class="detail-card__label">
+                Tongzi
+              </span>
+
+              <span class="detail-card__arrow" aria-hidden="true">
+                ↗
+              </span>
+
+            </button>
+
+            <div
+              class="detail-card__content"
+              id="detail-tongzi"
+              hidden
+            >
+              <p>
+                iya, aku juga masuk ke website ini.
+                privilege pembuat.
+              </p>
+            </div>
+
+          </article>
+
+
+          <!-- HYDROPONICS -->
+
+          <article
+            class="detail-card detail-card--hydroponic detail-card--interactive"
+          >
+
+            <button
+              class="detail-card__trigger"
+              id="hydroponicTrigger"
+              type="button"
+              data-detail="hydroponic"
+              aria-expanded="false"
+              aria-controls="detail-hydroponic"
+            >
+
+              <span class="detail-card__icon" aria-hidden="true">
+                🌱
+              </span>
+
+              <span class="detail-card__label">
+                PKWU: HIDROPONIK
+              </span>
+
+              <span class="detail-card__arrow" aria-hidden="true">
+                ↗
+              </span>
+
+            </button>
+
+            <div
+              class="detail-card__content detail-card__content--large"
+              id="detail-hydroponic"
+              hidden
+            >
+
+              <p class="detail-card__content-kicker">
+                current side quest
+              </p>
+
+              <p>
+                lately kita lumayan sering
+                pulang agak sore gara-gara ini.
+              </p>
+
+              <p>
+                rangka dan sistemnya
+                alhamdulillah udah jadi.
+              </p>
+
+              <p>
+                tapi project-nya sendiri
+                belum selesai.
+              </p>
+
+              <p class="detail-card__content-accent">
+                our little side quest isn't over yet.
+              </p>
+
+            </div>
+
+          </article>
+
+        </div>
+
+
+        <div class="details-footer-note">
+
+          <p>
+            see?
+            ternyata hal-hal kecil juga bisa punya tempatnya sendiri.
+          </p>
+
+        </div>
+
+
+        <div class="scene-navigation">
+
+          <button
+            class="scene-button scene-button--soft"
+            type="button"
+            data-next-scene="6"
+          >
+            <span class="scene-button__label">
+              okay... one more thing.
+            </span>
+            <span class="scene-button__icon" aria-hidden="true">
+              →
+            </span>
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         SCENE 06
+         THE PHOTO
+         ======================================================= -->
+
+    <section
+      class="scene scene--photo"
+      id="scene-6"
+      data-scene="6"
+      data-scene-name="photo"
+      aria-labelledby="scene6-title"
+      aria-hidden="true"
+    >
+
+      <div class="scene__inner scene__inner--photo">
+
+        <div class="photo-intro">
+
+          <p class="photo-intro__line">
+            okay.
+          </p>
+
+          <h2
+            id="scene6-title"
+            class="photo-intro__title"
+          >
+            one more thing.
+          </h2>
+
+        </div>
+
+
+        <figure class="portrait-reveal">
+
+          <div class="portrait-reveal__frame">
+
+            <div class="portrait-reveal__image-wrap">
+
+              <!--
+                Ganti assets/tata.jpg dengan nama file foto
+                sebenarnya jika nanti diperlukan.
+
+                object-fit akan diatur CSS agar foto tidak
+                terpotong di mobile maupun desktop.
+              -->
+
+              <img
+                class="portrait-reveal__image"
+                id="tataPhoto"
+                src="tata.jpg"
+                alt="Foto Tata"
+                loading="eager"
+                decoding="async"
+              >
+
+            </div>
+
+            <div
+              class="portrait-reveal__shine"
+              aria-hidden="true"
+            ></div>
+
+          </div>
+
+
+          <figcaption class="portrait-reveal__caption">
+
+            <p class="portrait-reveal__caption-main">
+              the girl behind all these stories.
+            </p>
+
+            <p class="portrait-reveal__caption-sub">
+              my
+              <span class="portrait-reveal__favorite">
+                favorite one.
+              </span>
+            </p>
+
+          </figcaption>
+
+        </figure>
+
+
+        <!-- Required sticker for photo scene -->
+
+        <div
+          class="sticker-slot sticker-slot--scene6"
+          aria-hidden="true"
+        >
+          <img
+            src="stiker3.png"
+            alt=""
+            class="sticker"
+            loading="lazy"
+          >
+        </div>
+
+
+        <div class="scene-navigation scene-navigation--photo">
+
+          <button
+            class="scene-button scene-button--photo"
+            type="button"
+            data-next-scene="7"
+          >
+
+            <span class="scene-button__label">
+              lanjut pelan-pelan yaa
+            </span>
+
+            <span
+              class="scene-button__icon"
+              aria-hidden="true"
+            >
+              ↘
+            </span>
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         SCENE 07
+         THE TURN
+         ======================================================= -->
+
+    <section
+      class="scene scene--turn"
+      id="scene-7"
+      data-scene="7"
+      data-scene-name="turn"
+      aria-labelledby="scene7-title"
+      aria-hidden="true"
+    >
+
+      <div class="scene__inner scene__inner--turn">
+
+        <div class="turn-copy">
+
+          <p
+            class="turn-copy__line"
+            id="scene7-title"
+          >
+            bhapp mau ucapin ultah aja
+            kata pengantarnya dah sepanjang ini😭
+          </p>
+
+          <p class="turn-copy__small">
+            tenang aja kokk.
+          </p>
+
+          <p class="turn-copy__small">
+            yg ini beda sama yg di wa teksnya,
+            soalnya di sini tuh yg lebih serius nya, hehee.
+          </p>
+
+        </div>
+
+
+        <div class="turn-divider" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+
+        <div class="turn-english">
+
+          <p class="turn-english__line">
+            Some things are easier to write
+            when you don't have to say them out loud.
+          </p>
+
+          <p class="turn-english__line turn-english__line--soft">
+            So...
+            let me try this properly.
+          </p>
+
+        </div>
+
+
+        <div class="scene-navigation">
+
+          <button
+            class="scene-button scene-button--serious"
+            type="button"
+            data-next-scene="8"
+            data-focus-letter="true"
+          >
+
+            <span class="scene-button__label">
+              okay, serius dulu.
+            </span>
+
+            <span
+              class="scene-button__icon"
+              aria-hidden="true"
+            >
+              ↓
+            </span>
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         SCENE 08
+         THE LETTER
+         ======================================================= -->
+
+    <section
+      class="scene scene--letter"
+      id="scene-8"
+      data-scene="8"
+      data-scene-name="letter"
+      aria-labelledby="scene8-title"
+      aria-hidden="true"
+    >
+
+      <div class="scene__inner scene__inner--letter">
+
+        <header class="letter-heading">
+
+          <p class="letter-heading__prelude">
+            tenang aja kokk,
+            yg ini beda sama yg di wa teksnya.
+          </p>
+
+          <p class="letter-heading__prelude letter-heading__prelude--soft">
+            di sini tuh yg lebih serius nya, hehee.
+          </p>
+
+        </header>
+
+
+        <article
+          class="letter"
+          id="birthdayLetter"
+          aria-label="Surat ulang tahun untuk Tata"
+        >
+
+          <!-- =================================================
+               LETTER PARAGRAPH 01
+               ================================================= -->
+
+          <p
+            class="letter__paragraph letter__paragraph--typing"
+            data-letter-step="1"
+          >
+            aalooo bolu ubii, umm mungkin aku seharusnya
+            skrng manggil kamu nenek talita kali yak.
+            bhaap walaupun cuman beda 1 tahun doang sihh.
+            hehee
+          </p>
+
+
+          <!-- =================================================
+               LETTER PARAGRAPH 02
+               ================================================= -->
+
+          <p
+            class="letter__paragraph letter__paragraph--typing"
+            data-letter-step="2"
+          >
+            aku harap aku yg jadi orang pertama yg ngucapin kamu,
+            walaupun sebatas text sii.
+            karna kita sekarang kepisah jarak,
+            alhasil keduluan ur mom atau ga ur bapack
+            yang ngucapin secara langsung.
+            tapi ndak apa, it's okay.
+            ini aja malah pas ganti tanggal sung
+            aku kirim yg di wa😭, 00.00
+          </p>
+
+
+          <!-- =================================================
+               LETTER PARAGRAPH 03
+               ================================================= -->
+
+          <p
+            class="letter__paragraph letter__paragraph--typing"
+            data-letter-step="3"
+          >
+            umm, jujur banyak sebenernya yg pengen disampein,
+            malah saking banyak ga tau harus mulai dari mana
+            dan kayak gimana kata²nya.
+            Asiikkk.
+            Ini aku typingnya biasa aja kali yak😭,
+            agak romantis sikit dah kali yee.
+            bhapp.
+          </p>
+
+
+          <!-- =================================================
+               LETTER PARAGRAPH 04
+               ================================================= -->
+
+          <p
+            class="letter__paragraph letter__paragraph--typing"
+            data-letter-step="4"
+          >
+            Soalnya tuh kalo kata²nya serius banget
+            takutnya nanti kamu nangis.
+            huhuhuuu.
+            terharu.
+            ntar kalo kamu nangis kan ga ada aku di samping
+            yang ngusapin air matanya🥺.
+            ehh ntar aku elapin dari jauh ajaa deh.
+            cupcupcup...
+            aku elap pake kanebo 🫶🏻🫰🏻
+          </p>
+
+
+          <!-- =================================================
+               LETTER PAUSE
+               ================================================= -->
+
+          <div
+            class="letter-pause"
+            data-letter-step="5"
+            aria-hidden="true"
+          >
+            <span>...</span>
+          </div>
+
+
+          <!-- =================================================
+               LETTER PARAGRAPH 05
+               ================================================= -->
+
+          <p
+            class="letter__paragraph letter__paragraph--typing"
+            data-letter-step="6"
+          >
+            nah tuh kann,
+            ga kerasa aku ngetik intronya aja dah sepanjang ini.
+            uda ngalahin kata pengantar di fisika erlangga inimah wok😭.
+            Dah ahh, serius dulu nih ngucapin nya.
+            asiikkk
+          </p>
+
+
+          <!-- =================================================
+               LETTER BREAK
+               ================================================= -->
+
+          <div
+            class="letter-break"
+            data-letter-step="7"
+            aria-hidden="true"
+          >
+            <span>umm</span>
+          </div>
+
+
+          <!-- =================================================
+               LETTER BIRTHDAY
+               ================================================= -->
+
+          <p
+            class="letter__hero-line letter__hero-line--typing"
+            data-letter-step="8"
+          >
+            HABEDEEE TALITAAA.
+          </p>
+
+
+          <p
+            class="letter__paragraph letter__paragraph--typing"
+            data-letter-step="9"
+          >
+            aku di sini ga pake kata² template tahunan
+            yg mungkin uda sering kamu dengar sebelumnya.
+            Biar lebih spesial dan beda gitu sii,
+            ada unique selling pointnya gitu lahh.
+            Asikk.
+          </p>
+
+
+          <!-- =================================================
+               LETTER ENGLISH CORE
+               ================================================= -->
+
+          <div
+            class="letter__english"
+            data-letter-step="10"
+          >
+
+            <p class="letter__english-lead">
+              Soo, my biggest wish is to keep seeing you smile,
+              not just today, but for all the years to come.
+            </p>
+
+            <p>
+              I want to be the one who stands by you
+              through life's brightest days and darkest nights,
+              standing proud of your triumphs,
+              being the anchor you lean on during the roughest seas,
+              and keeping you safe when the ground shakes.
+            </p>
+
+          </div>
+
+
+          <!-- =================================================
+               LETTER PARAGRAPH 06
+               ================================================= -->
+
+          <p
+            class="letter__paragraph letter__paragraph--typing"
+            data-letter-step="11"
+          >
+            dan seperti biasa,
+            semoga apa yg km harapkan dpt tercapai di usia ini,
+            berbagai harapan, wishlist, pencapaian,
+            dan apapun itu.
+            dan tentunya semakin diperlancar
+            dan dipermudah jalannya.
+            dan yg pasti sehat² yaap,
+            semoga di usia ini bisa jadi pribadi yg lebih baik lg,
+            lebih dewasa, ceria, dan jadi diri sendiri.
+            bisa terus berprogress bareng.
+            Saling support,
+            saling ngingetin jugak
+          </p>
+
+
+          <!-- =================================================
+               LETTER PARAGRAPH 07
+               ================================================= -->
+
+          <p
+            class="letter__paragraph letter__paragraph--typing"
+            data-letter-step="12"
+          >
+            Semoga km tetap jd km yg ceria,
+            bertanggung jawab,
+            dewasa,
+            random,
+            kadang ngambek,
+            kadang plenger😭
+          </p>
+
+
+          <!-- =================================================
+               LETTER PARAGRAPH 08
+               ================================================= -->
+
+          <p
+            class="letter__paragraph letter__paragraph--typing"
+            data-letter-step="13"
+          >
+            semoga km terus bertumbuh jd seseorang
+            yang lebih baik,
+            tanpa harus kehilangan sisi dirimu yang sekarang.
+          </p>
+
+
+          <!-- =================================================
+               LETTER PARAGRAPH 09
+               ================================================= -->
+
+          <p
+            class="letter__paragraph letter__paragraph--typing"
+            data-letter-step="14"
+          >
+            oiyak satu lagi,
+            makin lancar jg dah rezekinya.
+            rejeki ga cuma duit ajaa loh yaak.
+            wkwk
+          </p>
+
+
+          <!-- =================================================
+               LETTER PARAGRAPH 10
+               ================================================= -->
+
+          <p
+            class="letter__paragraph letter__paragraph--typing"
+            data-letter-step="15"
+          >
+            umm,
+            dah kabisan kata² aku wok😭.
+            intinya semua do'a yg baik² turut nyertain km.
+            btw kado ultahnya nanti pas kita di kopken yaaps.
+            mwehehee
+          </p>
+
+
+          <!-- =================================================
+               LETTER QUIET CORE
+               ================================================= -->
+
+          <div
+            class="letter__quiet"
+            data-letter-step="16"
+          >
+
+            <p>
+              Dan kalau suatu hari nanti kamu lagi capek,
+              lagi sedih,
+              atau dunia rasanya lagi nggak terlalu baik sama kamu...
+            </p>
+
+            <p class="letter__quiet-english">
+              I hope you remember that
+              you don't always have to face everything alone.
+            </p>
+
+            <p class="letter__quiet-anchor">
+              Karena, setidaknya untuk sekarang,
+            </p>
+
+            <p class="letter__quiet-final">
+              aku masih di sini.
+            </p>
+
+          </div>
+
+
+          <!-- =================================================
+               LETTER CLOSING
+               ================================================= -->
+
+          <div
+            class="letter__closing"
+            data-letter-step="17"
+          >
+
+            <p>
+              sebagai penutup,
+            </p>
+
+            <p class="letter__closing-joke">
+              makan seblak pake nasi
+            </p>
+
+            <p class="letter__closing-final">
+              habedee bolu ubiii🤍
+            </p>
+
+            <p class="letter__signature">
+              ~ Tongzi🤾‍♂️
+            </p>
+
+          </div>
+
+        </article>
+
+
+        <!-- =================================================
+             LETTER AUDIO NOTICE
+             ================================================= -->
+
+        <div
+          class="letter-audio-note"
+          id="letterAudioNote"
+          aria-live="polite"
+        >
+
+          <span class="letter-audio-note__icon" aria-hidden="true">
+            ♪
+          </span>
+
+          <span>
+            music1 is playing quietly.
+          </span>
+
+        </div>
+
+
+        <div class="scene-navigation scene-navigation--letter">
+
+          <button
+            class="scene-button scene-button--letter"
+            type="button"
+            data-next-scene="9"
+          >
+
+            <span class="scene-button__label">
+              satu hal lagi...
+            </span>
+
+            <span
+              class="scene-button__icon"
+              aria-hidden="true"
+            >
+              ↓
+            </span>
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         SCENE 09
+         THE BREATH
+         -------------------------------------------------------
+         music1 masih aktif ketika scene ini dibuka.
+         JS akan melakukan fade-out ketika tombol menuju
+         Scene 10 ditekan.
+         ======================================================= -->
+
+    <section
+      class="scene scene--breath"
+      id="scene-9"
+      data-scene="9"
+      data-scene-name="breath"
+      aria-labelledby="scene9-title"
+      aria-hidden="true"
+    >
+
+      <div class="scene__inner scene__inner--breath">
+
+        <div class="breath-copy">
+
+          <p class="breath-copy__kicker">
+            it's okey, ndak papaa.
+          </p>
+
+          <h2
+            id="scene9-title"
+            class="breath-copy__title"
+          >
+            If someday you forget
+            some of these words,
+            that's okay.
+          </h2>
+
+          <p class="breath-copy__body">
+            Maybe you'll laugh at how much effort
+            I put into one birthday website.
+          </p>
+
+          <p class="breath-copy__body breath-copy__body--soft">
+            Maybe you'll forget the little details.
+          </p>
+
+          <p class="breath-copy__body breath-copy__body--final">
+            But I hope there is one thing
+            that stays.
+          </p>
+
+        </div>
+
+
+        <div class="breath-signature">
+
+          <span class="breath-signature__tiny">
+            someone is quietly
+          </span>
+
+          <span class="breath-signature__main">
+            rooting for you.
+          </span>
+
+          <span class="breath-signature__signature">
+            ~ Tongzi🤾‍♂️
+          </span>
+
+        </div>
+
+
+        <!--
+          Important:
+          This is deliberately NOT a giant "YOU ARE LOVED".
+          Scene 9 is a breath before the real climax.
+        -->
+
+
+        <div class="scene-navigation scene-navigation--breath">
+
+          <button
+            class="scene-button scene-button--threshold"
+            id="climaxButton"
+            type="button"
+            data-next-scene="10"
+            data-start-music="music2"
+            data-stop-music="music1"
+            data-climax="true"
+          >
+
+            <span class="scene-button__label">
+              wait...
+            </span>
+
+            <span
+              class="scene-button__sub"
+            >
+              there's one more thing.
+            </span>
+
+            <span
+              class="scene-button__icon"
+              aria-hidden="true"
+            >
+              ↗
+            </span>
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         SCENE 10
+         THE CLIMAX
+         -------------------------------------------------------
+         “MY TURN”
+         
+         Tata confessed first.
+         This is not the beginning of the relationship.
+         This is Tongzi finally taking his turn.
+         ======================================================= -->
+
+    <section
+      class="scene scene--climax"
+      id="scene-10"
+      data-scene="10"
+      data-scene-name="climax"
+      aria-labelledby="scene10-title"
+      aria-hidden="true"
+    >
+
+      <div class="scene__inner scene__inner--climax">
+
+        <!-- =================================================
+             CLIMAX ATMOSPHERE
+             ================================================= -->
+
+        <div
+          class="climax-atmosphere"
+          aria-hidden="true"
+        >
+          <span class="climax-star climax-star--1"></span>
+          <span class="climax-star climax-star--2"></span>
+          <span class="climax-star climax-star--3"></span>
+          <span class="climax-star climax-star--4"></span>
+        </div>
+
+
+        <!-- =================================================
+             CLIMAX INTRO
+             ================================================= -->
+
+        <div class="climax-intro">
+
+          <p class="climax-intro__small">
+            okay.
+          </p>
+
+          <p class="climax-intro__small climax-intro__small--delay">
+            sekarang giliranku.
+          </p>
+
+        </div>
+
+
+        <!-- =================================================
+             STICKERS
+             ================================================= -->
+
+        <div
+          class="sticker-slot sticker-slot--climax-a"
+          aria-hidden="true"
+        >
+          <img
+            src="stiker4.png"
+            alt=""
+            class="sticker"
+            loading="lazy"
+          >
+        </div>
+
+        <div
+          class="sticker-slot sticker-slot--climax-b"
+          aria-hidden="true"
+        >
+          <img
+            src="stiker5.png"
+            alt=""
+            class="sticker"
+            loading="lazy"
+          >
+        </div>
+
+        <div
+          class="sticker-slot sticker-slot--climax-c"
+          aria-hidden="true"
+        >
+          <img
+            src="stiker6.png"
+            alt=""
+            class="sticker"
+            loading="lazy"
+          >
+        </div>
+
+
+        <!-- =================================================
+             THE CORE
+             ================================================= -->
+
+        <div
+          class="climax-core"
+          id="climaxCore"
+        >
+
+          <p class="climax-core__context">
+            kamu pernah bilangnya duluan.
+          </p>
+
+          <p class="climax-core__context climax-core__context--soft">
+            dan sejak saat itu,
+            kita memang nggak langsung jadi apa-apa.
+          </p>
+
+          <p class="climax-core__context">
+            kita memilih buat jalan pelan-pelan.
+          </p>
+
+          <p class="climax-core__context climax-core__context--soft">
+            saling kenal.
+            saling adaptasi.
+            saling meyakinkan.
+          </p>
+
+
+          <div class="climax-core__pause" aria-hidden="true">
+            <span></span>
+          </div>
+
+
+          <p class="climax-core__statement">
+            dan sekarang...
+          </p>
+
+          <p class="climax-core__statement climax-core__statement--accent">
+            kayaknya aku udah siap.
+          </p>
+
+
+          <div class="climax-question">
+
+            <p class="climax-question__pre">
+              Tata,
+            </p>
+
+            <h2
+              id="scene10-title"
+              class="climax-question__title"
+            >
+              would you
+              be my girlfriend?
+            </h2>
+
+            <p class="climax-question__sub">
+              officially.
+            </p>
+
+          </div>
+
+
+          <!-- =================================================
+               RESPONSE BUTTONS
+               ================================================= -->
+
+          <div
+            class="climax-actions"
+            id="climaxActions"
+          >
+
+            <button
+              class="climax-response climax-response--yes"
+              id="yesButton"
+              type="button"
+              data-response="yes"
+            >
+              <span class="climax-response__main">
+                iya.
+              </span>
+
+              <span class="climax-response__sub">
+                akhirnya.
+              </span>
+            </button>
+
+
+            <button
+              class="climax-response climax-response--tease"
+              id="teaseButton"
+              type="button"
+              data-response="tease"
+            >
+              <span class="climax-response__main">
+                tunggu...
+              </span>
+
+              <span class="climax-response__sub">
+                aku mikir dulu😭
+              </span>
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             RESPONSE MESSAGE
+             -------------------------------------------------
+             Hidden initially.
+             JS akan membuka salah satu state.
+             ================================================= -->
+
+        <div
+          class="climax-response-state"
+          id="climaxResponseState"
+          aria-live="polite"
+          aria-atomic="true"
+          hidden
+        >
+
+          <div
+            class="climax-response-state__inner"
+            id="climaxResponseContent"
+          ></div>
+
+        </div>
+
+
+        <!-- =================================================
+             CLIMAX CONTINUE
+             ================================================= -->
+
+        <div
+          class="scene-navigation scene-navigation--climax"
+          id="climaxContinue"
+          hidden
+        >
+
+          <button
+            class="scene-button scene-button--after-climax"
+            type="button"
+            data-open-epilogue="true"
+          >
+
+            <span class="scene-button__label">
+              satu halaman terakhir.
+            </span>
+
+            <span
+              class="scene-button__icon"
+              aria-hidden="true"
+            >
+              ↓
+            </span>
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         EPILOGUE
+         -------------------------------------------------------
+         Website tidak langsung “mati”.
+         Cerita diteruskan.
+         ======================================================= -->
+
+    <section
+      class="scene scene--epilogue"
+      id="epilogue"
+      data-scene="epilogue"
+      data-scene-name="epilogue"
+      aria-labelledby="epilogue-title"
+      aria-hidden="true"
+    >
+
+      <div class="scene__inner scene__inner--epilogue">
+
+        <div class="epilogue-copy">
+
+          <p class="epilogue-copy__kicker">
+            and now...
+          </p>
+
+          <h2
+            id="epilogue-title"
+            class="epilogue-copy__title"
+          >
+            let's see where
+            this goes.
+          </h2>
+
+          <p class="epilogue-copy__body">
+            ternyata website-nya selesai.
+          </p>
+
+          <p class="epilogue-copy__body">
+            tapi ceritanya...
+          </p>
+
+          <p class="epilogue-copy__body epilogue-copy__body--accent">
+            belum.
+          </p>
+
+        </div>
+
+
+        <div class="epilogue-wishes">
+
+          <p>
+            semoga sehat selalu.
+          </p>
+
+          <p>
+            semoga rezekinya lancar.
+          </p>
+
+          <p>
+            semoga semua yang kamu usahakan
+            dipermudah.
+          </p>
+
+          <p>
+            semoga tetap ceria.
+          </p>
+
+          <p>
+            tetap random.
+          </p>
+
+          <p>
+            tetap plenger.
+          </p>
+
+          <p>
+            tetap jadi Tata.
+          </p>
+
+        </div>
+
+
+        <div class="epilogue-kopken">
+
+          <p>
+            dan soal kado...
+          </p>
+
+          <p class="epilogue-kopken__accent">
+            pas kita di Kopken yaaps.
+          </p>
+
+          <p>
+            mwehehee.
+          </p>
+
+        </div>
+
+
+        <footer class="epilogue-footer">
+
+          <p class="epilogue-footer__food">
+            makan seblak pake nasi
+          </p>
+
+          <p class="epilogue-footer__final">
+            habede bolu ubiii🐣
+          </p>
+
+          <p class="epilogue-footer__signature">
+            ~ Tongzi🤾‍♂️
+          </p>
+
+        </footer>
+
+
+        <div class="epilogue-replay">
+
+          <button
+            class="scene-button scene-button--replay"
+            id="replayButton"
+            type="button"
+            data-replay="true"
+          >
+
+            <span class="scene-button__icon" aria-hidden="true">
+              ↻
+            </span>
+
+            <span class="scene-button__label">
+              dari awal lagi?
+            </span>
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         GLOBAL SCENE NAVIGATION HELPER
+         -------------------------------------------------------
+         Hidden fallback / accessibility control.
+         JS dapat mengaktifkannya bila diperlukan.
+         ======================================================= -->
+
+    <div
+      class="navigation-fallback"
+      id="navigationFallback"
+      hidden
+      aria-hidden="true"
+    >
+
+      <button
+        type="button"
+        data-previous-scene="true"
+        aria-label="Scene sebelumnya"
+      >
+        ←
+      </button>
+
+      <button
+        type="button"
+        data-next-scene="true"
+        aria-label="Scene berikutnya"
+      >
+        →
+      </button>
+
+    </div>
+
+
+    <!-- =======================================================
+         NOSCRIPT FALLBACK
+         -------------------------------------------------------
+         Jika JavaScript tidak aktif, user tetap melihat pesan
+         yang informatif alih-alih halaman cream kosong.
+         ======================================================= -->
+
+    <noscript>
+
+      <div class="noscript-screen">
+
+        <div class="noscript-screen__inner">
+
+          <p>
+            umm...
+          </p>
+
+          <h1>
+            Bolu Ubi 🐣
+          </h1>
+
+          <p>
+            kayaknya website ini butuh JavaScript
+            buat bisa diajak jalan-jalan.
+          </p>
+
+          <p>
+            coba aktifkan JavaScript dulu yaa.
+          </p>
+
+          <p>
+            ~ Tongzi🤾‍♂️
+          </p>
+
+        </div>
+
+      </div>
+
+    </noscript>
+
+  </main>
+
+
+  <!-- =========================================================
+       SCRIPT
+       ---------------------------------------------------------
+       defer:
+       - HTML diparse terlebih dahulu.
+       - JS dijalankan setelah DOM tersedia.
+       - Menghindari blank page akibat script terlalu cepat.
+       ========================================================= -->
+
+  <script src="script.js" defer></script>
+
+</body>
+</html>
